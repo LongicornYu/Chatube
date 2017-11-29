@@ -170,12 +170,6 @@ $(function(){
 
 		showMessage('chatStarted');
 
-		var sound = document.getElementById("audio");
-        sound.play();
-
-
-        $(".chatscreen").effect( "shake" );
-        
 		if(data.msg.trim().length) {
 			createChatMessage(data.msg, data.user, data.img, moment());
 			scrollToBottom();
@@ -345,20 +339,6 @@ $(function(){
 
 			section.children().css('display', 'none');
 			tooManyPeople.fadeIn(1200);
-		}
-	}
-
-	function shake(){ 
-		if (parent.moveBy) {
-			for (i = 10; i > 0; i--) {
-				for (j = 1; j > 0; j--) {
-					parent.moveBy(0,i);
-					parent.moveBy(i,0);
-					parent.moveBy(0,-i);
-					parent.moveBy(-i,0);
-
-				}
-			}
 		}
 	}
 
