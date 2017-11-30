@@ -175,7 +175,7 @@ $(function(){
 		var sound = document.getElementById("audio");
 		sound.volume = (volume.value)/100.0;
 		console.log(sound.volume);
-    sound.play();
+    	sound.play();
 
 		if(data.msg.trim().length) {
 			createChatMessage(data.msg, data.user, data.img, moment());

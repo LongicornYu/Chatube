@@ -54,7 +54,7 @@ module.exports = function(app,io){
 					id: data
 				});
 			}
-			else
+			else if (room.length >=2)
 			{
 				chat.emit('tooMany', {boolean: true});
 			}
@@ -66,7 +66,7 @@ module.exports = function(app,io){
 
 			var room = findClientsSocket(io, data.id);
 			// Only two people per room are allowed
-			if (room.length ===1) {
+			if (room.length < 2) {
 
 				// Use the socket object to store data. Each client gets
 				// their own unique socket object
