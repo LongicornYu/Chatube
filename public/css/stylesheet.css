@@ -60,15 +60,19 @@ body {
 	height: 70px;
 	background-color: #3c4446;
 	margin-bottom: 200px;
+	position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%;
 }
 
 .bannertext {
-	text-align:center;
+	text-align:left;
 	padding-top: 15px;
 	font-family: 'Open Sans Condensed',serif;
 	font-weight: bold;
 	color:white;
-	font-size:25px;
+	font-size:28px;
+	margin-left:50px;
 }
 .bannertext span {
 	color: #d6441b;
@@ -79,7 +83,9 @@ body {
 
 /* ------------ Section styles ------------ */
 
-
+.section {
+	margin-top: 120px;
+}
 
 /* ------ Home ------ */
 
@@ -233,7 +239,7 @@ body {
 	display: block;
 	margin:0px auto;
 	width: 700px;
-	height: 400px;
+	height: 350px;
 	background-color: #ffffff;
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
@@ -241,14 +247,14 @@ body {
 }
 .personinside h2 {
 	padding-top: 20px;
-	width: 210px;
+	width: 300px;
 	overflow: hidden;
 }
 
 .infoInside {
 	text-align: left;
 	float: right;
-	margin: 65px 165px 0 0;
+	margin: 40px 100px 0 0;
 }
 
 #ownerImage {
@@ -490,23 +496,25 @@ body {
 	margin-top:10px;
 }
 
-.me {
+.you {
 	clear:both;
 	float:left;
 	margin-bottom:10px;
+	margin-left: 30px;
 }
 
-.you {
+.me {
 	clear:both;
 	float:right;
 	margin-bottom:10px;
+	margin-right:30px;
 }
 
-.you .image{
+.me .image{
 	float:right;
 }
 
-.chats .me p {
+.chats .you p {
 	text-align:left;
 	float: left;
 	display: inline-block;
@@ -524,7 +532,7 @@ body {
 	word-wrap: break-word;
 }
 
-.chats .you p {
+.chats .me p {
 	text-align:left;
 	float: left;
 	display: inline-block;
@@ -570,17 +578,17 @@ footer {
 	height: 130px;
 }
 #chatform {
-	width:700px;
+	width:100%;
 	margin: 0 auto;
 	background-color: white;
 }
 
 #text-input {
-	width: 550px;
-	height: 80px;
+	width: 450px;
+	height: 60px;
 	display: block;
 	float:left;
-	margin: 0 auto;
+	margin:0px 30px 0px 30px;
 	background-color: #f9f9f9;
 	border: 1px solid #cccccc;
 	border-radius: 2px;
@@ -594,11 +602,11 @@ footer {
 #submit {
 	width: 110px;
 	height: 60px;
-	float:right;
+	float:left;
 	text-align:center;
 	background-color: #73b4d4;
 	display: block;
-	margin: 0 auto;
+	margin: 10px 0px 0px 0px;
 	border: none;
 	box-shadow: 3px 3px 3px #efedee;
 	border-radius: 2px;
@@ -645,7 +653,127 @@ footer {
 
 .chatscreen{
 	display:none;
-	width:700px;
+	width:100%;
 	margin: 0 auto 200px;
 	overflow:hidden;
+}
+
+
+.microButton {
+  display: inline;
+	margin: 10px 10px 10px 10%;
+	float:left;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  padding: .5em .5em .5em .5em;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(180deg, #39C2C9 0%, #3FC8C9 80%, #3FC8C9 100%);
+  box-shadow: 2px 5px 30px rgba(63, 200, 201, .4);
+
+  will-change: transform, filter;
+  transition: all 0.3s ease-out;
+}
+.microButton .fa {
+  font-size: 20px;
+  line-height: 18px;
+  margin: 0;
+  text-shadow: 1px 2px 2px #2a8b90;
+}
+.microButton:hover {
+  transform: scale(.92);
+}
+.microButton:active {
+  filter: brightness(.8);
+}
+.microButton:focus {
+  outline: 0;
+}
+.microButton:disabled,
+.microButton[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: red;
+}
+
+
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 1.3em;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: 10px;
+}
+
+
+
+#volume-slider{
+	float:right;
+  align-items: center;
+  display    : flex;
+  width      : 235px;
+	margin: 10px 10px 10px 10px;
+}
+
+
+.volume-icon{
+  cursor          : pointer;
+  height          : 20px;
+  transform       : rotate(-0deg);
+  transform-origin: center left;
+  width           : 20px;
+
+  .volume-icon-bg{
+    fill      : #cbc8ce;
+    transition: fill 300ms;
+  }
+
+  &:hover .volume-icon-bg{
+    fill: #b6aebf;
+  }
+
+}
+
+
+#circle-mask-shape{
+  transform       : scale(0);
+  transform-origin: center center;
+}
+
+
+.volume-track{
+  background-color: #e1dee5;
+  border-radius   : 3px;
+  flex            : 1;
+  height          : 4px;
+  margin-left     : 5px;
+  position        : relative;
+}
+
+
+.volume-indicator{
+  background-color: #6e33a5;
+  border-radius   : 50%;
+  height          : 12px;
+  left            : 0;
+  position        : absolute;
+  top             : -4px;
+  transition      : visibility 100ms, opacity 100ms;
+  width           : 12px;
+}
+
+
+.Blink {
+  animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+}
+@keyframes blinker {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }

@@ -170,6 +170,13 @@ $(function(){
 
 		showMessage('chatStarted');
 
+		var volume = document.getElementById("volume-input");
+
+		var sound = document.getElementById("audio");
+		sound.volume = (volume.value)/100.0;
+		console.log(sound.volume);
+    sound.play();
+
 		if(data.msg.trim().length) {
 			createChatMessage(data.msg, data.user, data.img, moment());
 			scrollToBottom();
@@ -230,13 +237,13 @@ $(function(){
 		else {
 			who = 'you';
 		}
+
 		var emoji = new EmojiConvertor();
 		emoji.img_set = 'apple';
 		emoji.replace_mode = emoji.replace_mode;;
 		emoji.text_mode = false;
 
 		var out = emoji.replace_colons(msg);
-
 
 		var li = $(
 			'<li class=' + who + '>'+
@@ -250,8 +257,14 @@ $(function(){
 
 		// use the 'text' method to escape malicious user input
 		li.find('p').text(out);
-		li.find('b').text(user);
 
+		if(who==='me')
+		{
+			li.find('b').text('Me');
+		}
+		else {
+			li.find('b').text(user);
+		}
 		chats.append(li);
 
 		messageTimeSent = $(".timesent");
