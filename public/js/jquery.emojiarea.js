@@ -414,7 +414,7 @@
       editorDiv.scrollTop(editorDiv[0].scrollHeight);
     });
 
-    $textarea.after("<i class='emoji-picker-icon emoji-picker " + this.options.popupButtonClasses + "' data-id='" + id + "' data-type='picker'></i>");
+    $textarea.after("<img class='emoji-picker-icon emoji-picker' src='../img/emojilogo.png' data-id='" + id + "' data-type='picker'></img>");
 
     $textarea.hide().after(this.$editor);
     this.setup();
@@ -594,7 +594,7 @@
     this.$items = $('<div class="emoji-items">').appendTo(
         this.$itemsWrap);
 
-    this.emojiarea.$editor.after(this.$menu)
+    this.emojiarea.$editor.before(this.$menu)
 
     $body.on('keydown', function(e) {
       if (e.keyCode === KEY_ESC || e.keyCode === KEY_TAB) {

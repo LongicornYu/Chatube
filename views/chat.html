@@ -166,11 +166,11 @@
 		</div>
 
 		<div class="chatscreen">
-
 			<ul class="chats">
 				<!-- The chat messages will go here -->
 			</ul>
-
+		<canvas id="canvas">
+		</canvas>
 		</div>
 		<audio id="audio" src="../audio/message.mp3" autostart="false" ></audio>
 	</section>
@@ -181,7 +181,7 @@
 			<div id = "container">
 				<button class="microButton" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
 				<p class="lead emoji-picker-container" style="display:inline-block; width:500px; float:left">
-						<textarea class="form-control textarea-control" rows="3" placeholder="Textarea with emoji Unicode input" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
+						<textarea class="form-control textarea-control" rows="2" placeholder="Textarea with emoji Unicode input" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
 				</p>
 				<input type="submit" id="submit" value="SEND"/>
 			</div>
@@ -217,6 +217,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="../js/chat.js"></script>
 	<script src="../js/voiceinput.js"></script>
+	<script src="../js/fireworks.js"></script>
 </body>
 
 </html>

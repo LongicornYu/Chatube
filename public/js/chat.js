@@ -267,6 +267,13 @@ $(function(){
 
 		messageTimeSent = $(".timesent");
 		messageTimeSent.last().text(now.fromNow());
+
+		console.log(msg);
+		if(msg ==='1020')
+		{
+			console.log(msg);
+			startfirework();
+		}
 	}
 
 	function scrollToBottom(){

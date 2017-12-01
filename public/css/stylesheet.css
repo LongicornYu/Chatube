@@ -568,13 +568,15 @@ body {
 /* ------------ Footer styles ------------ */
 
 footer {
-	position:absolute;
-	bottom:0;
-	left:0;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	width:100%;
 	padding-top: 30px;
 	background-color: white;
 	height: 130px;
+	z-index: 150;
 }
 #chatform {
 	width:100%;
@@ -660,7 +662,7 @@ footer {
 
 .microButton {
   display: inline;
-	margin: 10px 10px 10px 10%;
+	margin: 10px 10px 10px 30%;
 	float:left;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -775,4 +777,9 @@ footer {
 @keyframes blinker {
   from { opacity: 1; }
   to { opacity: 0; }
+}
+
+canvas {
+	cursor: crosshair;
+	display: block;
 }
