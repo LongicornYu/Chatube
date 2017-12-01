@@ -529,6 +529,7 @@ body {
 	color: #637277;
 	line-height: 1.4;
 	word-wrap: break-word;
+	white-space: pre;
 }
 
 .chats .me #postedMessage {
@@ -547,6 +548,18 @@ body {
 	color: #637277;
 	line-height: 1.4;
 	word-wrap: break-word;
+	white-space: pre;
+}
+
+
+.chats .you #postedMessage img{
+	max-width:100%;
+	max-height:100%;
+}
+
+.chats .me #postedMessage img{
+	max-width:100%;
+	max-height:100%;
 }
 
 .image b {

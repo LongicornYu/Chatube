@@ -174,8 +174,6 @@ $(function(){
 		sound.volume = (volume.value)/100.0;
     	sound.play();
 
-    	console.log("Client Received Image");
-    	console.log(data);
     	if (!data.isImage)
     	{
 			if(data.msg.trim().length) {
@@ -195,8 +193,9 @@ $(function(){
 	textarea.keypress(function(e){
 
 		// Submit the form on enter
-
-		if(e.which == 13) {
+		var keyCode = (e.which ? e.which : e.keyCode);          
+            
+        if (keyCode === 10 || keyCode == 13 && e.ctrlKey) {
 			e.preventDefault();
 			chatForm.trigger('submit');
 		}
@@ -216,23 +215,31 @@ $(function(){
 			{
 				createChatMessage(true,textarea.html().toString(), name, img, moment());
 				scrollToBottom();
-				console.log("start sending image");
-				console.log(textarea.html());
+
 				socket.emit('msg', { isImage: true, msg: textarea.html().toString(), user: name, img: img});
 			}
 			else
 			{
-				createChatMessage(false,textarea.text(), name, img, moment());
+				console.log(textarea.html());
+				createChatMessage(false,textarea.html(), name, img, moment());
 				scrollToBottom();
 
-				console.log("start sending text");
 				// Send the message to the other person in the chat
-				socket.emit('msg', {isImage: false, msg: textarea.text(), user: name, img: img});
+				socket.emit('msg', {isImage: false, msg: textarea.html(), user: name, img: img});
 			}
 		}
 		// Empty the textarea
 		textarea.text("");
 	});
+
+
+	$('[contenteditable]').on('keydown', function(e){
+	    if(e.keyCode == 9){
+	        e.preventDefault();
+	        document.execCommand('insertHTML', false, '&#9;');
+	    }
+	}).css('white-space', 'pre');
+
 
 	// Update the relative time stamps on the chat messages every minute
 
@@ -286,7 +293,7 @@ $(function(){
 			var out = emoji.replace_colons(msg);
 
 			// use the 'text' method to escape malicious user input
-			li.find('p').text(out);
+			li.find('p').after(out);
 		}
 
 		if(who==='me')
@@ -301,10 +308,8 @@ $(function(){
 		messageTimeSent = $(".timesent");
 		messageTimeSent.last().text(now.fromNow());
 
-		console.log('Finished');
 		if(msg ==='1020')
 		{
-			console.log(msg);
 			startfirework();
 		}
 	}
