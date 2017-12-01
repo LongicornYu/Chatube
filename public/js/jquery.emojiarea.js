@@ -18,6 +18,34 @@
  * This file also contains some modifications by Igor Zhukov in order to add
  * custom scrollbars to EmojiMenu See keyword `MODIFICATION` in source code.
  */
+
+
+function composeThumbnail(file) { // source: https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
+
+  if (!/^image\//.test(file.type)) { // if not an image; 0 since we take only 1 image, if multiple dragged at once, consider only the first one in the array
+    console.log('ERROR: Not an image file.');
+    return false;
+  }
+
+  // compose an <img> for the thumbnail
+  var thumbnailImage = document.createElement("img");
+  thumbnailImage.file = file;
+  document.getElementsByClassName('emoji-wysiwyg-editor')[0].appendChild(thumbnailImage);
+
+  var reader = new FileReader();
+
+  reader.onload = (function(thumbnailImage) {
+    // this image is part of the data, so send typing notification to the agent
+    return function(event) {
+      thumbnailImage.src = event.target.result;
+    };
+  })(thumbnailImage);
+
+  reader.readAsDataURL(file);
+
+}
+
+
 (function($, window, document) {
 
   var ELEMENT_NODE = 1;
@@ -388,6 +416,26 @@
     });
 
     this.$editor.on("paste", function (e) {
+      console.log("User Paste Text");
+
+
+       var pastedData = event.clipboardData.items[1];
+
+      console.log(event.clipboardData.getData('Text'));
+      console.log(event.clipboardData.getData('text/plain'));
+      console.log(event.clipboardData.getData('text/html'));
+      console.log(event.clipboardData.getData('text/rtf'));
+
+      console.log(event.clipboardData.getData('Url'));
+      console.log(event.clipboardData.getData('text/uri-list'));
+      console.log(event.clipboardData.getData('text/x-moz-url'));
+        // If the clipboard data is of type image, read the data
+        if(pastedData.type.indexOf("image") === 0) {
+          console.log('calling thumbnail function'); // does not show up in the console! o.O
+          composeThumbnail(pastedData.getAsFile()); // this still works!
+        }
+
+
       e.preventDefault();
       var content;
       var charsRemaining = editorDiv.attr('maxlength') - (editorDiv.text().length + editorDiv.find('img').length);

@@ -129,10 +129,10 @@ module.exports = function(app,io){
 
 		// Handle the sending of messages
 		socket.on('msg', function(data){
-
 			// When the server receives a message, it sends it to the other person in the room.
-			socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
+			socket.broadcast.to(socket.room).emit('receive', {isImage: data.isImage, msg: data.msg, user: data.user, img: data.img});
 		});
+
 	});
 };
 

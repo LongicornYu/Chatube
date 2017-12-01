@@ -513,7 +513,7 @@ body {
 	float:right;
 }
 
-.chats .you p {
+.chats .you #postedMessage {
 	text-align:left;
 	float: left;
 	display: inline-block;
@@ -531,7 +531,7 @@ body {
 	word-wrap: break-word;
 }
 
-.chats .me p {
+.chats .me #postedMessage {
 	text-align:left;
 	float: left;
 	display: inline-block;
@@ -781,5 +781,7 @@ footer {
 
 canvas {
 	cursor: crosshair;
-	display: block;
+	position:relative;
+    z-index:20;
+    display:none;
 }

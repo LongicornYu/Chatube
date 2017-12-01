@@ -167,18 +167,28 @@ $(function(){
 	});
 
 	socket.on('receive', function(data){
-
 		showMessage('chatStarted');
-
 		var volume = document.getElementById("volume-input");
 
 		var sound = document.getElementById("audio");
 		sound.volume = (volume.value)/100.0;
-    sound.play();
+    	sound.play();
 
-		if(data.msg.trim().length) {
-			createChatMessage(data.msg, data.user, data.img, moment());
-			scrollToBottom();
+    	console.log("Client Received Image");
+    	console.log(data);
+    	if (!data.isImage)
+    	{
+			if(data.msg.trim().length) {
+				createChatMessage(data.isImage,data.msg, data.user, data.img, moment());
+				scrollToBottom();
+			}
+		}
+		else
+		{
+			if(data.msg.trim().length) {
+				createChatMessage(data.isImage, data.msg, data.user, data.img, moment());
+				scrollToBottom();
+			}
 		}
 	});
 
@@ -200,13 +210,25 @@ $(function(){
 		// Create a new chat message and display it directly
 
 		showMessage("chatStarted");
-		if(textarea.text().trim().length) {
-			createChatMessage(textarea.text(), name, img, moment());
-			scrollToBottom();
+		if(textarea.html().trim().length) {
+			
+			if (textarea.html().includes("<img"))
+			{
+				createChatMessage(true,textarea.html().toString(), name, img, moment());
+				scrollToBottom();
+				console.log("start sending image");
+				console.log(textarea.html());
+				socket.emit('msg', { isImage: true, msg: textarea.html().toString(), user: name, img: img});
+			}
+			else
+			{
+				createChatMessage(false,textarea.text(), name, img, moment());
+				scrollToBottom();
 
-			// Send the message to the other person in the chat
-			socket.emit('msg', {msg: textarea.text(), user: name, img: img});
-
+				console.log("start sending text");
+				// Send the message to the other person in the chat
+				socket.emit('msg', {isImage: false, msg: textarea.text(), user: name, img: img});
+			}
 		}
 		// Empty the textarea
 		textarea.text("");
@@ -225,7 +247,7 @@ $(function(){
 
 	// Function that creates a new chat message
 
-	function createChatMessage(msg,user,imgg,now){
+	function createChatMessage(isImage,msg,user,imgg,now){
 
 		var who = '';
 
@@ -236,25 +258,36 @@ $(function(){
 			who = 'you';
 		}
 
-		var emoji = new EmojiConvertor();
-		emoji.img_set = 'apple';
-		emoji.replace_mode = emoji.replace_mode;;
-		emoji.text_mode = false;
-
-		var out = emoji.replace_colons(msg);
-
 		var li = $(
-			'<li class=' + who + '>'+
-				'<div class="image">' +
-					'<img src=' + imgg + ' />' +
-					'<b></b>' +
-					'<i class="timesent" data-time=' + now + '></i> ' +
-				'</div>' +
-				'<p id="postedMessage"></p>' +
-			'</li>');
+				'<li class=' + who + '>'+
+					'<div class="image">' +
+						'<img src=' + imgg + ' />' +
+						'<b></b>' +
+						'<i class="timesent" data-time=' + now + '></i> ' +
+					'</div>' +
+					'<div id="postedMessage"><p></p></div>' +
+					'<div id="divpostedMessage"></div>' +
+				'</li>');
 
-		// use the 'text' method to escape malicious user input
-		li.find('p').text(out);
+
+		if (isImage)
+		{
+			// use the 'text' method to escape malicious user input
+			li.find('p').after(msg);
+
+		}
+		else
+		{
+			var emoji = new EmojiConvertor();
+			emoji.img_set = 'apple';
+			emoji.replace_mode = emoji.replace_mode;;
+			emoji.text_mode = false;
+
+			var out = emoji.replace_colons(msg);
+
+			// use the 'text' method to escape malicious user input
+			li.find('p').text(out);
+		}
 
 		if(who==='me')
 		{
@@ -268,7 +301,7 @@ $(function(){
 		messageTimeSent = $(".timesent");
 		messageTimeSent.last().text(now.fromNow());
 
-		console.log(msg);
+		console.log('Finished');
 		if(msg ==='1020')
 		{
 			console.log(msg);
