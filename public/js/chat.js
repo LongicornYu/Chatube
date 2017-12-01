@@ -35,7 +35,7 @@ $(function(){
 		hisName = $("#hisName"),
 		hisEmail = $("#hisEmail"),
 		chatForm = $("#chatform"),
-		textarea = $("#text-input"),
+		textarea = $(".emoji-wysiwyg-editor"),
 		messageTimeSent = $(".timesent"),
 		chats = $(".chats");
 
@@ -130,7 +130,7 @@ $(function(){
 	// Other useful
 
 	socket.on('startChat', function(data){
-		console.log(data);
+
 		if(data.boolean && data.id == id) {
 
 			chats.empty();
@@ -174,8 +174,7 @@ $(function(){
 
 		var sound = document.getElementById("audio");
 		sound.volume = (volume.value)/100.0;
-		console.log(sound.volume);
-    	sound.play();
+    sound.play();
 
 		if(data.msg.trim().length) {
 			createChatMessage(data.msg, data.user, data.img, moment());
@@ -201,17 +200,16 @@ $(function(){
 		// Create a new chat message and display it directly
 
 		showMessage("chatStarted");
-
-		if(textarea.val().trim().length) {
-			createChatMessage(textarea.val(), name, img, moment());
+		if(textarea.text().trim().length) {
+			createChatMessage(textarea.text(), name, img, moment());
 			scrollToBottom();
 
 			// Send the message to the other person in the chat
-			socket.emit('msg', {msg: textarea.val(), user: name, img: img});
+			socket.emit('msg', {msg: textarea.text(), user: name, img: img});
 
 		}
 		// Empty the textarea
-		textarea.val("");
+		textarea.text("");
 	});
 
 	// Update the relative time stamps on the chat messages every minute

@@ -12,7 +12,7 @@
 
 
 body {
-	background-color: #f0f1f3;
+	background-color: #f0f1f3 !important;
 	color:#667073;
 	font: 16px/1.3 'Arial',sans-serif;
 }
@@ -487,7 +487,6 @@ body {
 	width: 40%;
 	display: block;
 	margin:0px auto 650px;
-	background-color: #ffffff;
 	color: #637277;
 }
 
@@ -569,7 +568,7 @@ body {
 /* ------------ Footer styles ------------ */
 
 footer {
-	position:fixed;
+	position:absolute;
 	bottom:0;
 	left:0;
 	width:100%;
@@ -606,7 +605,7 @@ footer {
 	text-align:center;
 	background-color: #73b4d4;
 	display: block;
-	margin: 10px 0px 0px 0px;
+	margin: 0px 0px 0px 10px;
 	border: none;
 	box-shadow: 3px 3px 3px #efedee;
 	border-radius: 2px;

@@ -18,6 +18,7 @@
 	<link href="../css/emoji.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="../js/emoji.js" type="text/javascript"></script>
+	<link href="../css/emojipicker.css" rel="stylesheet">
 	<style>
 				#container {
 						position: relative;
@@ -179,13 +180,39 @@
 		<form id="chatform">
 			<div id = "container">
 				<button class="microButton" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
-				<textarea contenteditable="true" placeholder = "Type here..." id = "text-input"></textarea>
+				<p class="lead emoji-picker-container" style="display:inline-block; width:500px; float:left">
+						<textarea class="form-control textarea-control" rows="3" placeholder="Textarea with emoji Unicode input" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
+				</p>
 				<input type="submit" id="submit" value="SEND"/>
 			</div>
 		</form>
 	</footer>
 
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<!-- Begin emoji-picker JavaScript -->
+	<script src="../js/config.js"></script>
+	<script src="../js/util.js"></script>
+	<script src="../js/jquery.emojiarea.js"></script>
+	<script src="../js/emoji-picker.js"></script>
+	<!-- End emoji-picker JavaScript -->
+
+	<script>
+		$(function() {
+			// Initializes and creates emoji set from sprite sheet
+			window.emojiPicker = new EmojiPicker({
+				emojiable_selector: '[data-emojiable=true]',
+				assetsPath: '../img/',
+				popupButtonClasses: 'fa fa-smile-o'
+			});
+			// Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+			// You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+			// It can be called as many times as necessary; previously converted input fields will not be converted again
+			window.emojiPicker.discover();
+		});
+	</script>
+
+
 	<script src="../js/moment.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="../js/chat.js"></script>
