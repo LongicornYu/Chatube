@@ -91,7 +91,32 @@
 
 		<div class="connected">
 
-			<img src="../img/unnamed.jpg" id="creatorImage" />
+			<table class="avatarTable">
+				<tr class="hover08">
+					<td><div ><figure><img class="avatarSelectorImg" src = "../img/avatar/256_1.png"></img></figure></div></td>
+					<td><div ><figure><img class="avatarSelectorImg" src = "../img/avatar/256_2.png"></img></figure></div></td>
+					<td><div ><figure><img class="avatarSelectorImg" src = "../img/avatar/256_3.png"></img></figure></div></td>
+					<td><div ><figure><img class="avatarSelectorImg" src = "../img/avatar/256_4.png"></img></figure></div></td>
+				</tr>
+				<tr class="hover08">
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_5.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_6.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_7.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_8.png"></img></figure></div></td>
+				</tr>
+				<tr class="hover08">
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_9.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_10.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_11.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_12.png"></img></figure></div></td>
+				</tr>
+				<tr class="hover08">
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_13.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_14.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_15.png"></img></figure></div></td>
+					<td><div><figure><img class="avatarSelectorImg" src = "../img/avatar/256_16.png"></img></figure></div></td>
+				</tr>
+			</table>
 
 			<div class="infoConnected">
 				<h2>Who are you?</h2>
@@ -108,9 +133,32 @@
 		</div>
 
 		<div class="personinside">
-
-			<img src="../img/unnamed.jpg" id="ownerImage" />
-
+			<table class="avatarTable">
+				<tr class="hover08">
+					<td><div ><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_1.png"></img></figure></div></td>
+					<td><div ><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_2.png"></img></figure></div></td>
+					<td><div ><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_3.png"></img></figure></div></td>
+					<td><div ><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_4.png"></img></figure></div></td>
+				</tr>
+				<tr class="hover08">
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_5.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_6.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_7.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_8.png"></img></figure></div></td>
+				</tr>
+				<tr class="hover08">
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_9.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_10.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_11.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_12.png"></img></figure></div></td>
+				</tr>
+				<tr class="hover08">
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_13.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_14.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_15.png"></img></figure></div></td>
+					<td><div><figure><img class="youravatarSelectorImg" src = "../img/avatar/256_16.png"></img></figure></div></td>
+				</tr>
+			</table>
 			<div class="infoInside">
 				<h2>Chat with <span class="nickname-chat"></span></h2>
 				<br/>
@@ -209,6 +257,16 @@
 			// You may want to delay this step if you have dynamically created input fields that appear later in the loading process
 			// It can be called as many times as necessary; previously converted input fields will not be converted again
 			window.emojiPicker.discover();
+		});
+
+		$('.avatarSelectorImg').click(function(){
+   		$('.avatarSelectorImg').removeClass('selected'); // removes the previous selected class
+   		$(this).addClass('selected'); // adds the class to the clicked image
+		});
+
+		$('.youravatarSelectorImg').click(function(){
+			$('.youravatarSelectorImg').removeClass('selected'); // removes the previous selected class
+			$(this).addClass('selected'); // adds the class to the clicked image
 		});
 	</script>
 

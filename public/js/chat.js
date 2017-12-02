@@ -12,6 +12,7 @@ $(function(){
 	// variables which hold the data for each person
 	var name = "",
 		email = "",
+		vartar = "",
 		img = "",
 		friend = "";
 
@@ -32,8 +33,10 @@ $(function(){
 		loginForm = $(".loginForm"),
 		yourName = $("#yourName"),
 		yourEmail = $("#yourEmail"),
+		yourAvatar = $(".avatarSelectorImg.selected"),
 		hisName = $("#hisName"),
 		hisEmail = $("#hisEmail"),
+		hisAvatar = $(".youravatarSelectorImg.selected")
 		chatForm = $("#chatform"),
 		textarea = $(".emoji-wysiwyg-editor"),
 		messageTimeSent = $(".timesent"),
@@ -75,6 +78,7 @@ $(function(){
 				}
 
 				email = yourEmail.val();
+				vartar = $(".avatarSelectorImg.selected").attr("src");
 
 				if(!isValid(email)) {
 					alert("Please enter a valid email!");
@@ -84,7 +88,7 @@ $(function(){
 					showMessage("inviteSomebody");
 
 					// call the server-side function 'login' and send user's parameters
-					socket.emit('login', {user: name, avatar: email, id: id});
+					socket.emit('login', {user: name, avatar: vartar, id: id});
 				}
 
 			});
@@ -109,13 +113,15 @@ $(function(){
 					alert("There already is a \"" + name + "\" in this room!");
 					return;
 				}
+
+				vartar = $(".youravatarSelectorImg.selected").attr("src");
 				email = hisEmail.val();
 
 				if(!isValid(email)){
 					alert("Wrong e-mail format!");
 				}
 				else {
-					socket.emit('login', {user: name, avatar: email, id: id});
+					socket.emit('login', {user: name, avatar: vartar, id: id});
 				}
 
 			});
@@ -193,8 +199,8 @@ $(function(){
 	textarea.keypress(function(e){
 
 		// Submit the form on enter
-		var keyCode = (e.which ? e.which : e.keyCode);          
-            
+		var keyCode = (e.which ? e.which : e.keyCode);
+
         if (keyCode === 10 || keyCode == 13 && e.ctrlKey) {
 			e.preventDefault();
 			chatForm.trigger('submit');
@@ -210,7 +216,7 @@ $(function(){
 
 		showMessage("chatStarted");
 		if(textarea.html().trim().length) {
-			
+
 			if (textarea.html().includes("<img"))
 			{
 				createChatMessage(true,textarea.html().toString(), name, img, moment());
@@ -281,6 +287,7 @@ $(function(){
 		{
 			// use the 'text' method to escape malicious user input
 			li.find('p').after(msg);
+			li.find('p').hide();
 
 		}
 		else
@@ -293,7 +300,7 @@ $(function(){
 			var out = emoji.replace_colons(msg);
 
 			// use the 'text' method to escape malicious user input
-			li.find('p').after(out);
+			li.find('p').text(out);
 		}
 
 		if(who==='me')
