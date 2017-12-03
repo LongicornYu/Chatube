@@ -30,6 +30,7 @@ function composeThumbnail(file) { // source: https://developer.mozilla.org/en-US
   // compose an <img> for the thumbnail
   var thumbnailImage = document.createElement("img");
   thumbnailImage.file = file;
+
   document.getElementsByClassName('emoji-wysiwyg-editor')[0].appendChild(thumbnailImage);
 
   var reader = new FileReader();
@@ -419,27 +420,19 @@ function composeThumbnail(file) { // source: https://developer.mozilla.org/en-US
       console.log("User Paste Text");
 
 
-       var pastedData = event.clipboardData.items[1];
+      var pastedData = event.clipboardData.items[1];
 
-      console.log(event.clipboardData.getData('Text'));
-      console.log(event.clipboardData.getData('text/plain'));
-      console.log(event.clipboardData.getData('text/html'));
-      console.log(event.clipboardData.getData('text/rtf'));
-
-      console.log(event.clipboardData.getData('Url'));
-      console.log(event.clipboardData.getData('text/uri-list'));
-      console.log(event.clipboardData.getData('text/x-moz-url'));
-        // If the clipboard data is of type image, read the data
-        if(pastedData.type.indexOf("image") === 0) {
-          console.log('calling thumbnail function'); // does not show up in the console! o.O
-          composeThumbnail(pastedData.getAsFile()); // this still works!
-        }
+      // If the clipboard data is of type image, read the data
+      if(pastedData.type.indexOf("image") === 0) {
+        console.log('calling thumbnail function'); // does not show up in the console! o.O
+        composeThumbnail(pastedData.getAsFile()); // this still works!
+      }
 
 
       e.preventDefault();
       var content;
       var charsRemaining = editorDiv.attr('maxlength') - (editorDiv.text().length + editorDiv.find('img').length);
-      if ((e.originalEvent || e).clipboardData) {
+      if ((e.originalEvent || e).clipboardData && pastedData.type.indexOf("image") < 0) {
         content = (e.originalEvent || e).clipboardData.getData('text/plain');
         if (self.options.onPaste) {
           content = self.options.onPaste(content);
