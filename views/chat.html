@@ -222,6 +222,12 @@
 
 		</div>
 
+		<div class="videoChatInviteReject">
+			<h2><span class="nickname-chat"></span> refused your call</h2>
+			<br/>
+		</div>
+
+
 		<div class="nomessages">
 
 			<img src="../img/unnamed.jpg" id="noMessagesImage" />
@@ -317,7 +323,7 @@
 		};
 
 		function rejectCall(){
-			alert("reject");
+			socket.emit("videoChatRejected", {senderId: socket.io.engine.id});
 		};
 
 

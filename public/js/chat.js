@@ -24,6 +24,7 @@ $(function(){
 		personInside = $(".personinside"),
 		chatScreen = $(".chatscreen"),
 		videoChatScreen = $("#videoChatArea"),
+		videoChatInviteReject = $(".videoChatInviteReject"),
 		videoChatInviteWait = $(".videoChatInviteWait"),
 		left = $(".left"),
 		noMessages = $(".nomessages"),
@@ -73,6 +74,24 @@ $(function(){
 			showMessage("VideoChatReqestWaiting");
 		}
 	});
+
+
+	socket.on('videoChatRefused', function(senderId){
+		console.log(senderId);
+		console.log(socket.io.engine.id);
+
+		if (socket.io.engine.id === senderId)
+		{
+			showMessage("VideoChatRejected");
+		}
+		else
+		{
+			showMessage("VideoChatRejectedOwner");
+		}
+
+	});
+
+	
 	
 
 	// receive the names and avatars of all people in the chat room
@@ -242,7 +261,6 @@ $(function(){
 			}
 			else
 			{
-				console.log(textarea.html());
 				createChatMessage(false,textarea.html(), name, img, moment());
 				scrollToBottom();
 
@@ -432,6 +450,16 @@ $(function(){
 			chatScreen.css('display','block');
 			videoChatInviteWait.fadeIn(1200);
 
+		}
+		else if (status === "VideoChatRejectedOwner") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			videoChatInviteReject.fadeIn(1200);
+		}
+		else if (status === "VideoChatRejected") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			videoChatInvite.fadeOut(1200);
 		}
 	}
 

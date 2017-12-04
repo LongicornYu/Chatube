@@ -133,7 +133,6 @@ module.exports = function(app,io){
 		});
 
 		socket.on('videoChat', function(data){
-			console.log("server recive video chat requeast");
 	        socket.emit('created', data.senderId);
 	        socket.emit('videoChatInvite', data.senderId);
 	        socket.broadcast.to(this.room).emit('videoChatInvite', data.senderId);
@@ -146,6 +145,13 @@ module.exports = function(app,io){
 	    });
 
 
+		socket.on('videoChatRejected', function(data){
+					chat.in(data.senderId).emit('videoChatRefused', data.senderId);
+					socket.broadcast.to(this.room).emit('videoChatRefused', data.senderId);
+	    });
+
+
+
 		// Handle the sending of messages
 		socket.on('msg', function(data){
 			// When the server receives a message, it sends it to the other person in the room.
@@ -153,7 +159,6 @@ module.exports = function(app,io){
 		});
 
 		socket.on('message', function(message) {
-			console.log('Client said: ', message);
 			// for a real app, would be room-only (not broadcast)
 			socket.broadcast.to(socket.room).emit('message', message);
 		});
