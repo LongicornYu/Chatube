@@ -1,6 +1,5 @@
 // This file is executed in the browser, when people visit /chat/<random id>
 
-
 $(function(){
 
 	// getting the id of the room from the url
@@ -97,8 +96,11 @@ $(function(){
 
 	});
 
-	
-	
+	socket.on('emailChatHistorys', function(data){
+		console.log("client start sending email...");
+		emailChatTranscript(data.email, chatScreen.html());
+	});
+
 
 	// receive the names and avatars of all people in the chat room
 	socket.on('peopleinchat', function(data){
@@ -129,7 +131,7 @@ $(function(){
 					showMessage("inviteSomebody");
 
 					// call the server-side function 'login' and send user's parameters
-					socket.emit('login', {user: name, avatar: vartar, id: id});
+					socket.emit('login', {user: name, avatar: vartar, id: id, email: email});
 				}
 
 			});
@@ -162,7 +164,7 @@ $(function(){
 					alert("Wrong e-mail format!");
 				}
 				else {
-					socket.emit('login', {user: name, avatar: vartar, id: id});
+					socket.emit('login', {user: name, avatar: vartar, id: id, email: email});
 				}
 
 			});
@@ -204,6 +206,7 @@ $(function(){
 		}
 
 	});
+
 
 	socket.on('tooMany', function(data){
 
@@ -369,6 +372,37 @@ $(function(){
 
 		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		return re.test(thatemail);
+	}
+
+
+	function emailChatTranscript(email, msg){
+		console.log(email);
+		console.log(msg);
+		var nodemailer = require('nodemailer');
+
+		var transporter = nodemailer.createTransport({
+		  service: 'gmail',
+		  auth: {
+		    user: 'chatubeapp@gmail.com',
+		    pass: 'chatube531'
+		  }
+		});
+
+		var mailOptions = {
+		  from: 'chatubeapp@gmail.com',
+		  to: email,
+		  subject: 'Chat history',
+		  text: msg
+		};
+
+		transporter.sendMail(mailOptions, function(error, info){
+		  if (error) {
+		    console.log(error);
+		  } else {
+		    console.log('Email sent: ' + info.response);
+		  }
+		});
+
 	}
 
 	function showMessage(status,data){

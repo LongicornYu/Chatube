@@ -80,6 +80,7 @@ module.exports = function(app,io){
 
 				socket.username = data.user;
 				socket.room = data.id;
+				socket.email = data.email
 				socket.avatar = data.avatar;
 				//socket.avatar = gravatar.url(data.avatar, {s: '140', r: 'x', d: 'mm'});
 
@@ -151,6 +152,11 @@ module.exports = function(app,io){
 	    });
 
 
+		socket.on('emailChatHistory', function(data){
+			console.log("Server get email script request");
+			// When the server receives a message, it sends it to the other person in the room.
+			chat.in(data.senderId).emit('emailChatHistorys', {email:this.email});
+		});
 
 		// Handle the sending of messages
 		socket.on('msg', function(data){

@@ -280,6 +280,7 @@
 				<button class="chatButton" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
 				<button class="chatButton" id="btnAudioChat"><i class="fa fa-phone" id="iAudioChat"></i></button>
 				<button class="chatButton" id="btnVideoChat"><i class="fa fa-video-camera" id="iVideoChat"></i></button>
+				<button class="chatButton" id="btnEmail"><i class="fa fa-envelope-o" id="iEmail"></i></button>
 				<p class="lead emoji-picker-container" style="display:inline-block; width:500px; float:left">
 						<textarea class="form-control textarea-control" rows="2" placeholder="Ctrl+Enter to submit" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
 				</p>
@@ -326,6 +327,16 @@
 			socket.emit("videoChat", {senderId: socket.io.engine.id});
 
 		});
+
+		$('#btnEmail').click(function(){
+			console.log("trigger email");
+			console.log(socket.io.engine.id);
+			//$('.videoChatInviteWait').fadeIn(1200);
+			socket.emit("emailChatHistory", {senderId: socket.io.engine.id});
+
+		});
+
+
 
 		function acceptCall(){
 			var sound = document.getElementById("videoCallaudio");
