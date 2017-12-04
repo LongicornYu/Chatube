@@ -96,11 +96,6 @@ $(function(){
 
 	});
 
-	socket.on('emailChatHistorys', function(data){
-		console.log("client start sending email...");
-		emailChatTranscript(data.email, chatScreen.html());
-	});
-
 
 	// receive the names and avatars of all people in the chat room
 	socket.on('peopleinchat', function(data){
@@ -375,35 +370,7 @@ $(function(){
 	}
 
 
-	function emailChatTranscript(email, msg){
-		console.log(email);
-		console.log(msg);
-		var nodemailer = require('nodemailer');
-
-		var transporter = nodemailer.createTransport({
-		  service: 'gmail',
-		  auth: {
-		    user: 'chatubeapp@gmail.com',
-		    pass: 'chatube531'
-		  }
-		});
-
-		var mailOptions = {
-		  from: 'chatubeapp@gmail.com',
-		  to: email,
-		  subject: 'Chat history',
-		  text: msg
-		};
-
-		transporter.sendMail(mailOptions, function(error, info){
-		  if (error) {
-		    console.log(error);
-		  } else {
-		    console.log('Email sent: ' + info.response);
-		  }
-		});
-
-	}
+	
 
 	function showMessage(status,data){
 

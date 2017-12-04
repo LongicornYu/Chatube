@@ -155,7 +155,7 @@ module.exports = function(app,io){
 		socket.on('emailChatHistory', function(data){
 			console.log("Server get email script request");
 			// When the server receives a message, it sends it to the other person in the room.
-			chat.in(data.senderId).emit('emailChatHistorys', {email:this.email});
+			 emailChatTranscript(this.email, data.emailtext);
 		});
 
 		// Handle the sending of messages
@@ -182,6 +182,36 @@ module.exports = function(app,io){
 
 	});
 };
+
+function emailChatTranscript(email, msg){
+		console.log(email);
+		console.log(msg);
+		var nodemailer = require('nodemailer');
+	console.log("0");
+		var transporter = nodemailer.createTransport({
+		  service: 'gmail',
+		  auth: {
+		    user: 'chatubeapp@gmail.com',
+		    pass: 'chatube531'
+		  }
+		});
+	console.log("1");
+		var mailOptions = {
+		  from: 'chatubeapp@gmail.com',
+		  to: email,
+		  subject: 'Chat history',
+		  text: msg
+		};
+	console.log("2");
+		transporter.sendMail(mailOptions, function(error, info){
+		  if (error) {
+		    console.log(error);
+		  } else {
+		    console.log('Email sent: ' + info.response);
+		  }
+		});
+
+}
 
 
 function findClientsSocket(io,roomId, namespace) {

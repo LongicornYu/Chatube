@@ -331,8 +331,9 @@
 		$('#btnEmail').click(function(){
 			console.log("trigger email");
 			console.log(socket.io.engine.id);
+			var emailtext = $(".chats").html();
 			//$('.videoChatInviteWait').fadeIn(1200);
-			socket.emit("emailChatHistory", {senderId: socket.io.engine.id});
+			socket.emit("emailChatHistory", {senderId: socket.io.engine.id, emailtext: emailtext});
 
 		});
 
