@@ -213,12 +213,28 @@
 
 		</div>
 
+		<div id="videoChatArea">
+
+			<div id="videoCanvas">
+				<video id="camera" autoplay></video>
+				<canvas id="photo"></canvas>
+			</div>
+			<div id="buttons">
+				<a href="#" class="push_button blue" id="snap">Snap</a>
+				<a href="#" class="push_button blue" id="send">Send</a>
+			</div>
+
+			<div id="incoming">
+				<h2>Incoming photos</h2>
+				<div id="trail"></div>
+			</div>
+		</div>
 		<div class="chatscreen">
 			<ul class="chats">
 				<!-- The chat messages will go here -->
 			</ul>
-		<canvas id="canvas">
-		</canvas>
+			<canvas id="fireworkcanvas">
+			</canvas>
 		</div>
 		<audio id="audio" src="../audio/message.mp3" autostart="false" ></audio>
 	</section>
@@ -228,6 +244,7 @@
 		<form id="chatform">
 			<div id = "container">
 				<button class="microButton" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
+				<button class="videoChatButton" id="btnVideoChat"><i class="fa fa-video-camera" id="iVideoChat"></i></button>
 				<p class="lead emoji-picker-container" style="display:inline-block; width:500px; float:left">
 						<textarea class="form-control textarea-control" rows="2" placeholder="Ctrl+Enter to submit" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
 				</p>
@@ -268,6 +285,12 @@
 			$('.youravatarSelectorImg').removeClass('selected'); // removes the previous selected class
 			$(this).addClass('selected'); // adds the class to the clicked image
 		});
+
+		$('#btnVideoChat').click(function(){
+
+			$('#videoChatArea').show(); // adds the class to the clicked image
+		});
+
 	</script>
 
 
@@ -276,6 +299,8 @@
 	<script src="../js/chat.js"></script>
 	<script src="../js/voiceinput.js"></script>
 	<script src="../js/fireworks.js"></script>
+	<script src="../js/adapter.js"></script>
+	<script src="../js/videoChat.js"></script>
 </body>
 
 </html>

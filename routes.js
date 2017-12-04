@@ -5,7 +5,8 @@
 // Use the gravatar module, to turn email addresses into avatar images:
 
 var gravatar = require('gravatar');
-
+var os = require('os');
+var http = require('http');
 // Export a function, so that we can pass
 // the app and io instances from the app.js file:
 
@@ -15,6 +16,12 @@ module.exports = function(app,io){
 
 		// Render views/home.html
 		res.render('home');
+	});
+
+	app.get('/videoChat', function(req, res){
+
+		// Render views/videoChat.html
+		res.render('videoChat');
 	});
 
 	app.get('/create', function(req,res){
@@ -79,20 +86,24 @@ module.exports = function(app,io){
 				// Tell the person what he should use for an avatar
 				socket.emit('img', socket.avatar);
 
-
 				// Add the client to the room
 				socket.join(data.id);
 
 				if (room.length == 1) {
-
 					var usernames = [],
 						avatars = [];
 
+					console.log("helloworld");
 					usernames.push(room[0].username);
 					usernames.push(socket.username);
 
 					avatars.push(room[0].avatar);
 					avatars.push(socket.avatar);
+
+
+					socket.emit('joined', socket.id);
+					chat.in(data.id).emit('ready');
+					socket.broadcast.to(room).emit('ready');
 
 					// Send the startChat event to all the people in the
 					// room, along with a list of people that are in it.
@@ -103,6 +114,9 @@ module.exports = function(app,io){
 						users: usernames,
 						avatars: avatars
 					});
+				}
+				else {
+					socket.emit('created', room, socket.id);
 				}
 			}
 			else {
@@ -134,8 +148,26 @@ module.exports = function(app,io){
 			socket.broadcast.to(socket.room).emit('receive', {isImage: data.isImage, msg: data.msg, user: data.user, img: data.img});
 		});
 
+		socket.on('message', function(message) {
+			console.log('Client said: ', message);
+			// for a real app, would be room-only (not broadcast)
+			socket.broadcast.to(socket.room).emit('message', message);
+		});
+
+		socket.on('ipaddr', function() {
+		    var ifaces = os.networkInterfaces();
+		    for (var dev in ifaces) {
+		      ifaces[dev].forEach(function(details) {
+		        if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
+		          socket.emit('ipaddr', details.address);
+		        }
+		      });
+		    }
+		  });
+
 	});
 };
+
 
 function findClientsSocket(io,roomId, namespace) {
 	var res = [],

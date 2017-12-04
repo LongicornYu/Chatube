@@ -385,7 +385,7 @@ $(function(){
 		else if(status === "chatStarted"){
 
 			section.children().css('display','none');
-			chatScreen.css('display','block');
+			chatScreen.css('display','flex');
 		}
 
 		else if(status === "somebodyLeft"){

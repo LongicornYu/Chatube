@@ -16,7 +16,7 @@ var port = process.env.PORT || 1024;
 // Initialize a new socket.io object. It is bound to
 // the express app, which allows them to coexist.
 
-var io = require('socket.io').listen(app.listen(port));
+var io = require('socket.io').listen(app.listen(port, '0.0.0.0'));
 
 // Require the configuration and the routes files, and pass
 // the app and io as arguments to the returned functions.
