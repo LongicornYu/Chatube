@@ -93,7 +93,6 @@ module.exports = function(app,io){
 					var usernames = [],
 						avatars = [];
 
-					console.log("helloworld");
 					usernames.push(room[0].username);
 					usernames.push(socket.username);
 

@@ -1,7 +1,5 @@
 /*------------- Reset browser differences ------------- */
 
-
-
 * {
 	padding: 0;
 	margin: 0;
@@ -22,6 +20,61 @@ body {
 
 /* ------------ Header styles ------------ */
 
+/*------------- Volume picker ------------ */
+#volume-slider{
+	float:right;
+  align-items: center;
+  display    : flex;
+  width      : 235px;
+	margin: 10px 10px 10px 10px;
+}
+
+
+.volume-icon{
+  cursor          : pointer;
+  height          : 20px;
+  transform       : rotate(-0deg);
+  transform-origin: center left;
+  width           : 20px;
+
+  .volume-icon-bg{
+    fill      : #cbc8ce;
+    transition: fill 300ms;
+  }
+
+  &:hover .volume-icon-bg{
+    fill: #b6aebf;
+  }
+
+}
+
+
+#circle-mask-shape{
+  transform       : scale(0);
+  transform-origin: center center;
+}
+
+
+.volume-track{
+  background-color: #e1dee5;
+  border-radius   : 3px;
+  flex            : 1;
+  height          : 4px;
+  margin-left     : 5px;
+  position        : relative;
+}
+
+
+.volume-indicator{
+  background-color: #6e33a5;
+  border-radius   : 50%;
+  height          : 12px;
+  left            : 0;
+  position        : absolute;
+  top             : -4px;
+  transition      : visibility 100ms, opacity 100ms;
+  width           : 12px;
+}
 
 
 /* ------ Home ------ */
@@ -52,7 +105,6 @@ body {
 }
 
 
-
 /* ------ Invite ------ */
 
 
@@ -77,8 +129,6 @@ body {
 .bannertext span {
 	color: #d6441b;
 }
-
-
 
 
 /* ------------ Section styles ------------ */
@@ -157,6 +207,51 @@ body {
 }
 
 
+/* ------ Login Page Avatar Selector ------*/
+
+.avatarSelectorImg{
+	height:50px;
+	width:50px;
+	margin:10px;
+}
+
+.youravatarSelectorImg{
+	height:50px;
+	width:50px;
+	margin:10px;
+}
+
+.avatarTable{
+	margin: 30px 50px 0px 50px;
+	float: left;
+}
+
+/* Gray Scale */
+.hover08 figure img {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover08 figure:hover img {
+	-webkit-filter: grayscale(0);
+	filter: grayscale(0);
+}
+
+
+.avatarSelectorImg.selected {
+	-webkit-filter: grayscale(0);
+	filter: grayscale(0);
+	--box-shadow:1px 1px 1px 1px #333;
+	--border-color:blue;
+}
+
+.youravatarSelectorImg.selected {
+	-webkit-filter: grayscale(0);
+	filter: grayscale(0);
+	--box-shadow:1px 1px 1px 1px #333;
+	--border-color:blue;
+}
 
 /* ------ Connected ------*/
 
@@ -639,6 +734,67 @@ footer {
 }
 
 
+/* ------ Chat function buttons ------*/
+
+.chatscreen{
+	display:none;
+	width:100%;
+	margin: 0 auto 200px;
+	overflow:hidden;
+}
+
+.chatButton {
+  display: inline;
+  margin: 15px 15px 15px 15px;
+  float:left;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  padding: .5em .5em .5em .5em;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(180deg, #39C2C9 0%, #3FC8C9 80%, #3FC8C9 100%);
+  box-shadow: 2px 5px 30px rgba(63, 200, 201, .4);
+
+  will-change: transform, filter;
+  transition: all 0.3s ease-out;
+}
+.chatButton .fa {
+  font-size: 20px;
+  line-height: 18px;
+  margin: 0;
+  text-shadow: 1px 2px 2px #2a8b90;
+}
+.chatButton:hover {
+  transform: scale(.92);
+}
+.chatButton:active {
+  filter: brightness(.8);
+}
+.chatButton:focus {
+  outline: 0;
+}
+.chatButton:disabled,
+.chatButton[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: red;
+}
+
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 1.3em;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: 10px;
+}
+
 
 
 /* ---------------------- HIDE -------------------------- */
@@ -672,212 +828,10 @@ footer {
 	display:none;
 }
 
-.chatscreen{
-	display:none;
-	width:100%;
-	margin: 0 auto 200px;
-	overflow:hidden;
-	float:left;
-	
-}
 
+/* ---------------------- Chat Functions -------------------------- */
 
-.microButton {
-  display: inline;
-	margin: 10px 10px 10px 10px;
-	float:left;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 50%;
-  padding: .5em .5em .5em .5em;
-  text-align: center;
-  color: #fff;
-  background: linear-gradient(180deg, #39C2C9 0%, #3FC8C9 80%, #3FC8C9 100%);
-  box-shadow: 2px 5px 30px rgba(63, 200, 201, .4);
-
-  will-change: transform, filter;
-  transition: all 0.3s ease-out;
-}
-.microButton .fa {
-  font-size: 20px;
-  line-height: 18px;
-  margin: 0;
-  text-shadow: 1px 2px 2px #2a8b90;
-}
-.microButton:hover {
-  transform: scale(.92);
-}
-.microButton:active {
-  filter: brightness(.8);
-}
-.microButton:focus {
-  outline: 0;
-}
-.microButton:disabled,
-.microButton[disabled]{
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: red;
-}
-
-
-.videoChatButton {
-  display: inline;
-	margin: 10px 10px 10px 10px;
-	float:left;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 50%;
-  padding: .5em .5em .5em .5em;
-  text-align: center;
-  color: #fff;
-  background: linear-gradient(180deg, #39C2C9 0%, #3FC8C9 80%, #3FC8C9 100%);
-  box-shadow: 2px 5px 30px rgba(63, 200, 201, .4);
-
-  will-change: transform, filter;
-  transition: all 0.3s ease-out;
-}
-.videoChatButton .fa {
-  font-size: 20px;
-  line-height: 18px;
-  margin: 0;
-  text-shadow: 1px 2px 2px #2a8b90;
-}
-.videoChatButton:hover {
-  transform: scale(.92);
-}
-.videoChatButton:active {
-  filter: brightness(.8);
-}
-.videoChatButton:focus {
-  outline: 0;
-}
-.videoChatButton:disabled,
-.videoChatButton[disabled]{
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: red;
-}
-
-
-
-.fa {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: 1.3em;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-left: 10px;
-}
-
-
-
-#volume-slider{
-	float:right;
-  align-items: center;
-  display    : flex;
-  width      : 235px;
-	margin: 10px 10px 10px 10px;
-}
-
-
-.volume-icon{
-  cursor          : pointer;
-  height          : 20px;
-  transform       : rotate(-0deg);
-  transform-origin: center left;
-  width           : 20px;
-
-  .volume-icon-bg{
-    fill      : #cbc8ce;
-    transition: fill 300ms;
-  }
-
-  &:hover .volume-icon-bg{
-    fill: #b6aebf;
-  }
-
-}
-
-
-#circle-mask-shape{
-  transform       : scale(0);
-  transform-origin: center center;
-}
-
-
-.volume-track{
-  background-color: #e1dee5;
-  border-radius   : 3px;
-  flex            : 1;
-  height          : 4px;
-  margin-left     : 5px;
-  position        : relative;
-}
-
-
-.volume-indicator{
-  background-color: #6e33a5;
-  border-radius   : 50%;
-  height          : 12px;
-  left            : 0;
-  position        : absolute;
-  top             : -4px;
-  transition      : visibility 100ms, opacity 100ms;
-  width           : 12px;
-}
-
-.avatarSelectorImg{
-	height:50px;
-	width:50px;
-	margin:10px;
-}
-
-.youravatarSelectorImg{
-	height:50px;
-	width:50px;
-	margin:10px;
-}
-
-.avatarTable{
-	margin: 30px 50px 0px 50px;
-	float: left;
-}
-
-/* Gray Scale */
-.hover08 figure img {
-	-webkit-filter: grayscale(100%);
-	filter: grayscale(100%);
-	-webkit-transition: .3s ease-in-out;
-	transition: .3s ease-in-out;
-}
-.hover08 figure:hover img {
-	-webkit-filter: grayscale(0);
-	filter: grayscale(0);
-}
-
-
-.avatarSelectorImg.selected {
-	-webkit-filter: grayscale(0);
-	filter: grayscale(0);
-	--box-shadow:1px 1px 1px 1px #333;
-	--border-color:blue;
-}
-
-.youravatarSelectorImg.selected {
-	-webkit-filter: grayscale(0);
-	filter: grayscale(0);
-	--box-shadow:1px 1px 1px 1px #333;
-	--border-color:blue;
-}
-
+/* -------- Voice to text--------- */
 .Blink {
   animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
 }
@@ -886,6 +840,7 @@ footer {
   to { opacity: 0; }
 }
 
+/* -------- fireworks--------- */
 #fireworkcanvas {
 	cursor: crosshair;
 	position:relative;
@@ -898,6 +853,7 @@ canvas {
   width: 320px;
 }
 
+/* -------- Video Chat--------- */
 video {
   max-width: 100%;
   width: 320px;
@@ -908,8 +864,6 @@ video {
 	display: none;
 	float:left;
 }
-
-
 
 .push_button {
 	position: relative;

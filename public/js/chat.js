@@ -23,6 +23,7 @@ $(function(){
 		inviteSomebody = $(".invite-textfield"),
 		personInside = $(".personinside"),
 		chatScreen = $(".chatscreen"),
+		videoChatScreen = $("#videoChatArea")
 		left = $(".left"),
 		noMessages = $(".nomessages"),
 		tooManyPeople = $(".toomanypeople");
@@ -351,6 +352,7 @@ $(function(){
 
 		else if(status === "personinchat"){
 
+			videoChatScreen.css("display", "none");
 			onConnect.css("display", "none");
 			personInside.fadeIn(1200);
 
@@ -385,7 +387,8 @@ $(function(){
 		else if(status === "chatStarted"){
 
 			section.children().css('display','none');
-			chatScreen.css('display','flex');
+			chatScreen.css('display','block');
+			//videoChatScreen.css('display','block');
 		}
 
 		else if(status === "somebodyLeft"){

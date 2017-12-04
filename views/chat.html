@@ -214,7 +214,6 @@
 		</div>
 
 		<div id="videoChatArea">
-
 			<div id="videoCanvas">
 				<video id="camera" autoplay></video>
 				<canvas id="photo"></canvas>
@@ -223,9 +222,7 @@
 				<a href="#" class="push_button blue" id="snap">Snap</a>
 				<a href="#" class="push_button blue" id="send">Send</a>
 			</div>
-
 			<div id="incoming">
-				<h2>Incoming photos</h2>
 				<div id="trail"></div>
 			</div>
 		</div>
@@ -243,8 +240,9 @@
 	<footer>
 		<form id="chatform">
 			<div id = "container">
-				<button class="microButton" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
-				<button class="videoChatButton" id="btnVideoChat"><i class="fa fa-video-camera" id="iVideoChat"></i></button>
+				<button class="chatButton" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
+				<button class="chatButton" id="btnAudioChat"><i class="fa fa-phone" id="iAudioChat"></i></button>
+				<button class="chatButton" id="btnVideoChat"><i class="fa fa-video-camera" id="iVideoChat"></i></button>
 				<p class="lead emoji-picker-container" style="display:inline-block; width:500px; float:left">
 						<textarea class="form-control textarea-control" rows="2" placeholder="Ctrl+Enter to submit" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
 				</p>
@@ -287,8 +285,8 @@
 		});
 
 		$('#btnVideoChat').click(function(){
-
-			$('#videoChatArea').show(); // adds the class to the clicked image
+			console.log("button_click");
+			$('#videoChatArea').css('display', 'block') // adds the class to the clicked image
 		});
 
 	</script>
