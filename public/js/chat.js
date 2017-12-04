@@ -49,6 +49,7 @@ $(function(){
 	// these variables hold images
 	var ownerImage = $("#ownerImage"),
 		leftImage = $("#leftImage"),
+		topImage = $("#topImage"),
 		noMessagesImage = $("#noMessagesImage");
 
 
@@ -63,15 +64,20 @@ $(function(){
 		img = data;
 	});
 
-	socket.on('videoChatInvite', function(senderId){
+	socket.on('videoChatInvite', function(data){
 		
-		if (socket.io.engine.id != senderId)
+		console.log(data.senderId);
+		if (socket.io.engine.id != data.senderId)
 		{
-			showMessage("VideoChatReqest");
+			showMessage("VideoChatReqest", data);
+			var sound = document.getElementById("videoCallaudio", data);
+			sound.loop=true;
+			//sound.volume = (volume.value)/100.0;
+	    	sound.play();
 		}
 		else
 		{
-			showMessage("VideoChatReqestWaiting");
+			showMessage("VideoChatReqestWaiting", data);
 		}
 	});
 
@@ -418,10 +424,17 @@ $(function(){
 		}
 
 		else if(status === "chatStarted"){
+			console.log(videoChatScreen.css('display'));
+			if (videoChatScreen.css('display') != "none")
+			{
+				section.children().css('display','none');
+				videoChatScreen.css('display','block');
+			}else {
+				section.children().css('display','none');
+				videoChatScreen.css('display','block');
+			}
 
-			section.children().css('display','none');
 			chatScreen.css('display','block');
-			//videoChatScreen.css('display','block');
 		}
 
 		else if(status === "somebodyLeft"){
@@ -443,6 +456,7 @@ $(function(){
 		else if (status === "VideoChatReqest") {
 			section.children().css('display', 'none');
 			chatScreen.css('display','block');
+			topImage.attr("src",data.avatar);
 			videoChatInvite.fadeIn(1200);
 		}
 		else if (status === "VideoChatReqestWaiting") {

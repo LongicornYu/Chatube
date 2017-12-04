@@ -14,11 +14,20 @@
 
 	<link type="text/css" rel="stylesheet" href="../css/stylesheet.css" />
 	<link href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans Condensed:300italic,300,700" rel="stylesheet" type="text/css">
 	<link href="../css/emoji.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="../js/emoji.js" type="text/javascript"></script>
+	<script src="../js/emoji.js" type="text/javascript"></script>
 	<link href="../css/emojipicker.css" rel="stylesheet">
+
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+	<script>
+			$(function() {
+		    	$("#videoChatArea").draggable();
+			});
+	</script>
 	<style>
 				#container {
 						position: relative;
@@ -239,9 +248,10 @@
 
 		</div>
 
-		<div id="videoChatArea">
+		<div id="videoChatArea" >
 			<div id="videoCanvas">
 				<video id="camera" autoplay></video>
+				<audio id="mic" autoplay></audio>
 				<canvas id="photo"></canvas>
 			</div>
 			<div id="buttons">
@@ -260,6 +270,7 @@
 			</canvas>
 		</div>
 		<audio id="audio" src="../audio/message.mp3" autostart="false" ></audio>
+		<audio id="videoCallaudio" src="../audio/videocall.mp3" autostart="false" ></audio>
 	</section>
 
 
@@ -277,8 +288,7 @@
 		</form>
 	</footer>
 
-	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
+	
 	<!-- Begin emoji-picker JavaScript -->
 	<script src="../js/config.js"></script>
 	<script src="../js/util.js"></script>
@@ -318,15 +328,19 @@
 		});
 
 		function acceptCall(){
+			var sound = document.getElementById("videoCallaudio");
+			//sound.volume = (volume.value)/100.0;
+	    	sound.pause();
 			socket.emit("videoChatJoined", {senderId: socket.io.engine.id});
 
 		};
 
 		function rejectCall(){
+			var sound = document.getElementById("videoCallaudio");
+			//sound.volume = (volume.value)/100.0;
+	    	sound.pause();
 			socket.emit("videoChatRejected", {senderId: socket.io.engine.id});
 		};
-
-
 	</script>
 
 

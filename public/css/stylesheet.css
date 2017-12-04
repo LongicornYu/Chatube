@@ -265,6 +265,7 @@ body {
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
+	border-radius: 15px;
 }
 .connected h2 {
 	padding-top: 20px;
@@ -336,6 +337,7 @@ body {
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
+	border-radius: 15px;
 }
 .videoChatInvite h2 {
 	padding-top: 20px;
@@ -356,8 +358,8 @@ body {
 
 body {
   background: #71AFFF;
-  padding: 100px;
 }
+
 .call-animation {
     background: #fff;
     float:left;
@@ -437,6 +439,7 @@ body {
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
+	border-radius: 15px;
 }
 .videoChatInviteReject h2 {
 	padding-top: 20px;
@@ -455,7 +458,9 @@ body {
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
+	border-radius: 15px;
 }
+
 .videoChatInviteWait h2 {
 	padding-top: 20px;
 	width: auto;
@@ -499,6 +504,7 @@ body {
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
+	border-radius: 15px;
 }
 .personinside h2 {
 	padding-top: 20px;
@@ -576,6 +582,7 @@ body {
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
+	border-radius: 15px;
 }
 .invite-textfield h2 {
 	padding-top: 80px;
@@ -614,6 +621,7 @@ body {
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
 	margin-bottom: 400px;
+	border-radius: 15px;
 }
 .left h2 {
 	padding-top: 50px;
@@ -649,6 +657,7 @@ body {
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
+	border-radius: 15px;
 }
 .toomanypeople h2 {
 	padding-top: 100px;
@@ -679,6 +688,7 @@ body {
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
 	margin-bottom: 400px;
+	border-radius: 15px;
 }
 .nomessages h2 {
 	padding-top: 50px;
@@ -778,7 +788,7 @@ body {
 	min-height: 10px;
 	max-width: 510px;
 	background-color: #FFF;
-	border-radius: 3px;
+	border-radius: 15px;
 	box-shadow: 0px 3px 3px #E3E4E6;
 	color: #637277;
 	line-height: 1.4;
@@ -796,7 +806,7 @@ body {
 	min-height: 10px;
 	max-width: 510px;
 	background-color: #FFF;
-	border-radius: 3px;
+	border-radius: 15px;
 	box-shadow: 0px 3px 3px #E3E4E6;
 	color: #637277;
 	line-height: 1.4;
@@ -1035,6 +1045,9 @@ video {
 {
 	display: none;
 	float:left;
+	border:1 solid gray;
+	width:600px;
+	background:white;
 }
 
 .push_button {

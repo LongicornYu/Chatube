@@ -134,8 +134,8 @@ module.exports = function(app,io){
 
 		socket.on('videoChat', function(data){
 	        socket.emit('created', data.senderId);
-	        socket.emit('videoChatInvite', data.senderId);
-	        socket.broadcast.to(this.room).emit('videoChatInvite', data.senderId);
+	        socket.emit('videoChatInvite', {senderId: data.senderId, avatar: this.avatar});
+	        socket.broadcast.to(this.room).emit('videoChatInvite', {senderId: data.senderId, avatar: this.avatar});
 	    });
 
 		socket.on('videoChatJoined', function(data){
