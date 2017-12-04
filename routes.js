@@ -99,11 +99,6 @@ module.exports = function(app,io){
 					avatars.push(room[0].avatar);
 					avatars.push(socket.avatar);
 
-
-					socket.emit('joined', socket.id);
-					chat.in(data.id).emit('ready');
-					socket.broadcast.to(room).emit('ready');
-
 					// Send the startChat event to all the people in the
 					// room, along with a list of people that are in it.
 
@@ -113,9 +108,6 @@ module.exports = function(app,io){
 						users: usernames,
 						avatars: avatars
 					});
-				}
-				else {
-					socket.emit('created', room, socket.id);
 				}
 			}
 			else {
@@ -139,6 +131,19 @@ module.exports = function(app,io){
 			// leave the room
 			socket.leave(socket.room);
 		});
+
+		socket.on('videoChat', function(data){
+			console.log("server recive video chat requeast");
+	        socket.emit('created', data.senderId);
+	        socket.emit('videoChatInvite', data.senderId);
+	        socket.broadcast.to(this.room).emit('videoChatInvite', data.senderId);
+	    });
+
+		socket.on('videoChatJoined', function(data){
+					socket.emit('joined', data.senderId);
+					chat.in(data.senderId).emit('ready');
+					socket.broadcast.to(this.room).emit('ready');
+	    });
 
 
 		// Handle the sending of messages

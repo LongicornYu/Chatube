@@ -41,7 +41,7 @@ socket.on('ipaddr', function(ipaddr) {
   // updateRoomURL(ipaddr);
 });
 
-socket.on('created', function( clientId) {
+socket.on('created', function(clientId) {
   isInitiator = true;
   grabWebCamVideo();
 });
@@ -56,6 +56,23 @@ socket.on('joined', function(clientId) {
 socket.on('ready', function() {
   console.log('VideoSocket is ready');
   createPeerConnection(isInitiator, configuration);
+
+/*
+  videoChatScreen = $("#videoChatArea"),
+  videoChatInviteWait = $(".videoChatInviteWait"),
+  videoChatInvite = $(".videoChatInvite");
+
+  section.children().css('display', 'none');
+  chatScreen.css('display','block');
+  
+  videoChatInvite.fadeOut(1200,function(){
+        videoChatScreen.fadeIn(1200);
+  });
+
+  videoChatInviteWait.fadeOut(1200,function(){
+        videoChatScreen.fadeIn(1200);
+  });
+*/
 });
 
 
@@ -199,6 +216,22 @@ function onDataChannelCreated(channel) {
 
   channel.onopen = function() {
     console.log('CHANNEL opened!!!');
+    var videoChatScreen = $("#videoChatArea"),
+    videoChatInviteWait = $(".videoChatInviteWait"),
+    videoChatInvite = $(".videoChatInvite"),
+    section = $(".section"),
+    chatScreen = $(".chatscreen");   
+
+    section.children().css('display', 'none');
+    chatScreen.css('display','block');
+  
+    videoChatInvite.fadeOut(1200,function(){
+          videoChatScreen.fadeIn(1200);
+    });
+
+    videoChatInviteWait.fadeOut(1200,function(){
+          videoChatScreen.fadeIn(1200);
+    });
   };
 
   channel.onmessage = (adapter.browserDetails.browser === 'firefox') ?

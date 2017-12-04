@@ -325,6 +325,149 @@ body {
 	font-size: 15px;
 }
 
+/* ----- videoChatInvite-----*/
+.videoChatInvite {
+	text-align:center;
+	display: block;
+	margin:0px auto;
+	width: 500px;
+	height: 400px;
+	background-color: #ffffff;
+	border-radius: 3px;
+	box-shadow:0px 3px 3px #e3e4e6;
+	color: #637277;
+}
+.videoChatInvite h2 {
+	padding-top: 20px;
+	width: auto;
+	overflow: hidden;
+}
+
+.videoChatInvite #buttons {
+	margin-left:100px;
+}
+
+#topImage {
+	margin: 50px 0px 0px 0px;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+}
+
+body {
+  background: #71AFFF;
+  padding: 100px;
+}
+.call-animation {
+    background: #fff;
+    float:left;
+    width: 45px;
+    height: 45px;
+    position: relative;
+    margin: 0px 40px 0px 120px;
+    border-radius: 100%;
+    border: solid 2px #fff;
+   
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.call-animation.red
+{
+ 	animation: playred 2s ease infinite;
+}
+
+.call-animation.green
+{
+ 	animation: playgreen 2s ease infinite;
+}
+
+.img-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 100%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+@keyframes playred {
+
+    0% {
+        transform: scale(1);
+    }
+    15% {
+        box-shadow: 0 0 0 2.5px rgba(255, 0, 0, 0.4);
+    }
+    25% {
+        box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.4), 0 0 0 9px rgba(255, 0, 0, 0.2);
+    }
+    25% {
+        box-shadow: 0 0 0 6px rgba(255, 0, 0, 0.4), 0 0 0 14px rgba(255, 0, 0, 0.2);
+    }
+
+}
+
+@keyframes playgreen {
+
+    0% {
+        transform: scale(1);
+    }
+    15% {
+        box-shadow: 0 0 0 2.5px rgba(0, 255, 0, 0.4);
+    }
+    25% {
+        box-shadow: 0 0 0 4px rgba(0, 255, 0, 0.4), 0 0 0 9px rgba(0, 255, 0, 0.2);
+    }
+    25% {
+        box-shadow: 0 0 0 6px rgba(0, 255, 0, 0.4), 0 0 0 14px rgba(0, 255, 0, 0.2);
+    }
+
+}
+
+
+/* ----- videoChatInviteWait-----*/
+.videoChatInviteWait {
+	text-align:center;
+	display: block;
+	margin:0px auto;
+	width: 500px;
+	height: 150px;
+	background-color: #ffffff;
+	border-radius: 3px;
+	box-shadow:0px 3px 3px #e3e4e6;
+	color: #637277;
+}
+.videoChatInviteWait h2 {
+	padding-top: 20px;
+	width: auto;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 20px;
+  height: 20px;
+  margin-left:225px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
 
 
 /* ------ Person Inside ------*/
@@ -805,6 +948,14 @@ footer {
 }
 
 .personinside {
+	display: none;
+}
+
+.videoChatInvite {
+	display: none;
+}
+
+.videoChatInviteWait {
 	display: none;
 }
 

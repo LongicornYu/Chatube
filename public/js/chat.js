@@ -23,9 +23,11 @@ $(function(){
 		inviteSomebody = $(".invite-textfield"),
 		personInside = $(".personinside"),
 		chatScreen = $(".chatscreen"),
-		videoChatScreen = $("#videoChatArea")
+		videoChatScreen = $("#videoChatArea"),
+		videoChatInviteWait = $(".videoChatInviteWait"),
 		left = $(".left"),
 		noMessages = $(".nomessages"),
+		videoChatInvite = $(".videoChatInvite");
 		tooManyPeople = $(".toomanypeople");
 
 	// some more jquery objects
@@ -37,7 +39,7 @@ $(function(){
 		yourAvatar = $(".avatarSelectorImg.selected"),
 		hisName = $("#hisName"),
 		hisEmail = $("#hisEmail"),
-		hisAvatar = $(".youravatarSelectorImg.selected")
+		hisAvatar = $(".youravatarSelectorImg.selected"),
 		chatForm = $("#chatform"),
 		textarea = $(".emoji-wysiwyg-editor"),
 		messageTimeSent = $(".timesent"),
@@ -59,6 +61,19 @@ $(function(){
 	socket.on('img', function(data){
 		img = data;
 	});
+
+	socket.on('videoChatInvite', function(senderId){
+		
+		if (socket.io.engine.id != senderId)
+		{
+			showMessage("VideoChatReqest");
+		}
+		else
+		{
+			showMessage("VideoChatReqestWaiting");
+		}
+	});
+	
 
 	// receive the names and avatars of all people in the chat room
 	socket.on('peopleinchat', function(data){
@@ -405,6 +420,18 @@ $(function(){
 
 			section.children().css('display', 'none');
 			tooManyPeople.fadeIn(1200);
+		}
+
+		else if (status === "VideoChatReqest") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			videoChatInvite.fadeIn(1200);
+		}
+		else if (status === "VideoChatReqestWaiting") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			videoChatInviteWait.fadeIn(1200);
+
 		}
 	}
 

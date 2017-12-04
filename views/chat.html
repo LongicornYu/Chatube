@@ -184,6 +184,26 @@
 
 		</div>
 
+
+		<div class="videoChatInvite">
+			<img src="../img/unnamed.jpg" id="topImage" />
+			<br/>
+			<h2><span class="nickname-chat"></span></h2>
+			<br/>
+			<div class="call-animation green">
+				<img class="img-circle" src="../img/videoCallAccept.png" alt="Accept" id="videoCallAccept" onclick="acceptCall(); return false;" width="135"/>
+			</div>
+			<div class="call-animation red" >
+				<img class="img-circle" src="../img/videoCallReject.png" alt="Reject" id="videoCallReject" onclick="rejectCall(); return false;" width="135"/>
+			</div>
+		</div>
+
+		<div class="videoChatInviteWait">
+			<h2>Waiting for <span class="nickname-chat"></span> to pick up...</h2>
+			<br/>
+			<div class="loader"></div>
+		</div>
+
 		<div class="left">
 
 			<img src="../img/unnamed.jpg" id="leftImage" />
@@ -285,9 +305,21 @@
 		});
 
 		$('#btnVideoChat').click(function(){
-			console.log("button_click");
-			$('#videoChatArea').css('display', 'block') // adds the class to the clicked image
+			console.log(socket.io.engine.id);
+			//$('.videoChatInviteWait').fadeIn(1200);
+			socket.emit("videoChat", {senderId: socket.io.engine.id});
+
 		});
+
+		function acceptCall(){
+			socket.emit("videoChatJoined", {senderId: socket.io.engine.id});
+
+		};
+
+		function rejectCall(){
+			alert("reject");
+		};
+
 
 	</script>
 
