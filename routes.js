@@ -164,6 +164,16 @@ module.exports = function(app,io){
 			socket.broadcast.to(socket.room).emit('receive', {isImage: data.isImage, msg: data.msg, user: data.user, img: data.img});
 		});
 
+		socket.on('snapReceived', function(data){
+
+			console.log("Server received snap render request");
+			console.log("user:"+this.username);
+			console.log("img:"+this.avatar);
+
+			chat.in(data.senderId).emit('renderSnap', {buf:data.buf, senderId:data.senderId, user:this.username, img:this.avatar});
+			socket.broadcast.to(this.room).emit('renderSnap', {buf:data.buf, senderId:data.senderId, user:this.username, img:this.avatar});
+		});
+
 		socket.on('message', function(message) {
 			// for a real app, would be room-only (not broadcast)
 			socket.broadcast.to(socket.room).emit('message', message);

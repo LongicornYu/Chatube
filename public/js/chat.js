@@ -64,7 +64,7 @@ $(function(){
 	});
 
 	socket.on('videoChatInvite', function(data){
-		
+
 		console.log(data.senderId);
 		if (socket.io.engine.id != data.senderId)
 		{
@@ -92,6 +92,19 @@ $(function(){
 		else
 		{
 			showMessage("VideoChatRejectedOwner");
+		}
+
+	});
+
+	socket.on('renderSnap', function(data){
+
+		if (socket.io.engine.id === data.senderId)
+		{
+			renderPhotobuffertoArea(data.buf, true, data.user, data.img);
+		}
+		else
+		{
+			renderPhotobuffertoArea(data.buf, false,data.user, data.img);
 		}
 
 	});
@@ -296,8 +309,61 @@ $(function(){
 
 	},60000);
 
-	// Function that creates a new chat message
 
+	function renderPhotobuffertoArea(data,ismine, user,imgg) {
+
+	    var now = moment();
+			var who = '';
+
+			if(ismine!=true) {
+				who = 'me';
+			}
+			else {
+				who = 'you';
+			}
+
+			var li = $(
+					'<li class=' + who + '>'+
+						'<div class="image">' +
+							'<img src=' + imgg + ' />' +
+							'<b></b>' +
+							'<i class="timesent" data-time=' + now + '></i> ' +
+						'</div>' +
+						'<div id="postedMessage"><p></p></div>' +
+						'<div id="divpostedMessage"></div>' +
+					'</li>');
+
+
+
+	    var canvas = document.createElement('canvas');
+	    canvas.width = photoContextW;
+	    canvas.height = photoContextH;
+	    canvas.classList.add('incomingPhoto');
+	    // trail is the element holding the incoming images
+	    li.find('p').after(canvas);
+	    li.find('p').hide();
+
+	    var context = canvas.getContext('2d');
+	    var img = context.createImageData(photoContextW, photoContextH);
+	    img.data.set(data);
+	    context.putImageData(img, 0, 0);
+
+
+			if(who==='me')
+			{
+				li.find('b').text('Me');
+			}
+			else {
+				li.find('b').text(user);
+			}
+			$(".chats").append(li);
+
+			var messageTimeSent = $(".timesent");
+			messageTimeSent.last().text(now.fromNow());
+
+	}
+
+	// Function that creates a new chat message
 	function createChatMessage(isImage,msg,user,imgg,now){
 
 		var who = '';
@@ -370,7 +436,7 @@ $(function(){
 	}
 
 
-	
+
 
 	function showMessage(status,data){
 
@@ -429,7 +495,7 @@ $(function(){
 			if (videoChatScreen.css('display') != "none")
 			{
 				section.children().css('display','none');
-				videoChatScreen.css('display','block');
+				videoChatScreen.css('display','none');
 			}else {
 				section.children().css('display','none');
 				videoChatScreen.css('display','block');

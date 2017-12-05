@@ -64,7 +64,7 @@ socket.on('ready', function() {
 
   section.children().css('display', 'none');
   chatScreen.css('display','block');
-  
+
   videoChatInvite.fadeOut(1200,function(){
         videoChatScreen.fadeIn(1200);
   });
@@ -220,11 +220,11 @@ function onDataChannelCreated(channel) {
     videoChatInviteWait = $(".videoChatInviteWait"),
     videoChatInvite = $(".videoChatInvite"),
     section = $(".section"),
-    chatScreen = $(".chatscreen");   
+    chatScreen = $(".chatscreen");
 
     section.children().css('display', 'none');
     chatScreen.css('display','block');
-  
+
     videoChatInvite.fadeOut(1200,function(){
           videoChatScreen.fadeIn(1200);
     });
@@ -258,7 +258,10 @@ function receiveDataChromeFactory() {
     if (count === buf.byteLength) {
       // we're done: all data chunks have been received
       console.log('Done. Rendering photo.');
-      renderPhototoArea(buf);
+      //renderPhototoArea(buf);
+      var socketId = socket.io.engine.id;
+      console.log(socketId);
+      socket.emit('snapReceived', {buf:data, senderId:socketId});
     }
   };
 }
@@ -336,60 +339,6 @@ function sendPhoto() {
     dataChannel.send(img.data.subarray(n * CHUNK_LEN));
   }
 }
-
-
-function renderPhototoArea(data,user,imgg) {
-
-    var now = new Date();
-		var who = '';
-
-		if(user===name) {
-			who = 'me';
-		}
-		else {
-			who = 'you';
-		}
-
-		var li = $(
-				'<li class=' + who + '>'+
-					'<div class="image">' +
-						'<img src=' + imgg + ' />' +
-						'<b></b>' +
-						'<i class="timesent" data-time=' + now + '></i> ' +
-					'</div>' +
-					'<div id="postedMessage"><p></p></div>' +
-					'<div id="divpostedMessage"></div>' +
-				'</li>');
-
-
-
-    var canvas = document.createElement('canvas');
-    canvas.width = photoContextW;
-    canvas.height = photoContextH;
-    canvas.classList.add('incomingPhoto');
-    // trail is the element holding the incoming images
-    li.find('p').after(canvas);
-    li.find('p').hide();
-
-    var context = canvas.getContext('2d');
-    var img = context.createImageData(photoContextW, photoContextH);
-    img.data.set(data);
-    context.putImageData(img, 0, 0);
-
-
-		if(who==='me')
-		{
-			li.find('b').text('Me');
-		}
-		else {
-			li.find('b').text(user);
-		}
-		chats.append(li);
-
-		messageTimeSent = $(".timesent");
-		messageTimeSent.last().text(now.fromNow());
-
-	}
 
 function show() {
   Array.prototype.forEach.call(arguments, function(elem) {
