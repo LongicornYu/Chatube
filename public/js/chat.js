@@ -65,7 +65,6 @@ $(function(){
 
 	socket.on('videoChatInvite', function(data){
 
-		console.log(data.senderId);
 		if (socket.io.engine.id != data.senderId)
 		{
 			showMessage("VideoChatReqest", data);
@@ -82,8 +81,6 @@ $(function(){
 
 
 	socket.on('videoChatRefused', function(senderId){
-		console.log(senderId);
-		console.log(socket.io.engine.id);
 
 		if (socket.io.engine.id === senderId)
 		{
@@ -435,9 +432,6 @@ $(function(){
 		return re.test(thatemail);
 	}
 
-
-
-
 	function showMessage(status,data){
 
 		if(status === "connected"){
@@ -491,7 +485,6 @@ $(function(){
 		}
 
 		else if(status === "chatStarted"){
-			console.log(videoChatScreen.css('display'));
 			if (videoChatScreen.css('display') != "none")
 			{
 				section.children().css('display','none');

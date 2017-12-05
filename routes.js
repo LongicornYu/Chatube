@@ -153,9 +153,7 @@ module.exports = function(app,io){
 
 
 		socket.on('emailChatHistory', function(data){
-			console.log("Server get email script request");
 			// When the server receives a message, it sends it to the other person in the room.
-			console.log(data.emailtext);
 			var webshot = require('node-webshot');
 
 			var options = {
@@ -182,11 +180,6 @@ module.exports = function(app,io){
 		});
 
 		socket.on('snapReceived', function(data){
-
-			console.log("Server received snap render request");
-			console.log("user:"+this.username);
-			console.log("img:"+this.avatar);
-
 			chat.in(data.senderId).emit('renderSnap', {buf:data.buf, senderId:data.senderId, user:this.username, img:this.avatar});
 			socket.broadcast.to(this.room).emit('renderSnap', {buf:data.buf, senderId:data.senderId, user:this.username, img:this.avatar});
 		});
@@ -211,10 +204,6 @@ module.exports = function(app,io){
 };
 
 function emailChatTranscript(email, attachmentPath, attachmentName){
-		console.log(attachmentPath);
-		console.log(attachmentName);
-		console.log(email);
-		
 		var nodemailer = require('nodemailer');
 	
 		var transporter = nodemailer.createTransport({
@@ -239,7 +228,6 @@ function emailChatTranscript(email, attachmentPath, attachmentName){
 		    }]
 
 		};
-	console.log("2");
 		transporter.sendMail(mailOptions, function(error, info){
 		  if (error) {
 		    console.log(error);

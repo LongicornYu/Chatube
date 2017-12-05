@@ -323,20 +323,10 @@
 		});
 
 		$('#btnVideoChat').click(function(){
-			console.log(socket.io.engine.id);
 			//$('.videoChatInviteWait').fadeIn(1200);
 			socket.emit("videoChat", {senderId: socket.io.engine.id});
 
 		});
-
-		/*$('#btnEmail').click(function(){
-			console.log("trigger email");
-			console.log(socket.io.engine.id);
-			var emailtext = $('html').html();
-			//$('.videoChatInviteWait').fadeIn(1200);
-			socket.emit("emailChatHistory", {senderId: socket.io.engine.id, emailtext: emailtext});
-
-		});*/
 
 		$('#btnDownload').click(function(){
 			generate();

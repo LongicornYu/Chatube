@@ -45,7 +45,6 @@
         var script = document.createElement('script');
         script.textContent = '(' + addOnPageLoad_.toString() + ')();';
         screenshot.querySelector('body').appendChild(script);
-        console.log(script);
         var blob = new Blob([screenshot.outerHTML], {
             type: 'text/plain'
         });
