@@ -20,7 +20,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="../js/emoji.js" type="text/javascript"></script>
 	<link href="../css/emojipicker.css" rel="stylesheet">
-
+	<script src="../js/screenshot.js" type="text/javascript"></script>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 	<script>
@@ -277,10 +277,11 @@
 	<footer>
 		<form id="chatform">
 			<div id = "container">
-				<button class="chatButton" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
-				<button class="chatButton" id="btnAudioChat"><i class="fa fa-phone" id="iAudioChat"></i></button>
-				<button class="chatButton" id="btnVideoChat"><i class="fa fa-video-camera" id="iVideoChat"></i></button>
-				<button class="chatButton" id="btnEmail"><i class="fa fa-envelope-o" id="iEmail"></i></button>
+				<button class="chatButton" title="Voice to Text" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
+				<button class="chatButton" title="Audio Chat" id="btnAudioChat"><i class="fa fa-phone" id="iAudioChat"></i></button>
+				<button class="chatButton" title="Video Chat" id="btnVideoChat"><i class="fa fa-video-camera" id="iVideoChat"></i></button>
+				<button class="chatButton" title="Email Chat Transcript" id="btnEmail"><i class="fa fa-envelope-o" id="iEmail"></i></button>
+				<button class="chatButton" title="Download Transcript" id="btnDownload"><i class="fa fa-download" id="iDownload"></i></button>
 				<p class="lead emoji-picker-container" style="display:inline-block; width:500px; float:left">
 						<textarea class="form-control textarea-control" rows="2" placeholder="Ctrl+Enter to submit" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
 				</p>
@@ -328,17 +329,22 @@
 
 		});
 
-		$('#btnEmail').click(function(){
+		/*$('#btnEmail').click(function(){
 			console.log("trigger email");
 			console.log(socket.io.engine.id);
-			var emailtext = $(".chats").html();
+			var emailtext = $('html').html();
 			//$('.videoChatInviteWait').fadeIn(1200);
 			socket.emit("emailChatHistory", {senderId: socket.io.engine.id, emailtext: emailtext});
 
+		});*/
+
+		$('#btnDownload').click(function(){
+			generate();
 		});
 
-
-
+		$('#btnEmail').click(function(){
+			generateHtml();
+		});
 		function acceptCall(){
 			var sound = document.getElementById("videoCallaudio");
 			//sound.volume = (volume.value)/100.0;

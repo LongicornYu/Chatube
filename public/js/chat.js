@@ -495,10 +495,10 @@ $(function(){
 			if (videoChatScreen.css('display') != "none")
 			{
 				section.children().css('display','none');
-				videoChatScreen.css('display','none');
+				videoChatScreen.css('display','block');
 			}else {
 				section.children().css('display','none');
-				videoChatScreen.css('display','block');
+				videoChatScreen.css('display','none');
 			}
 
 			chatScreen.css('display','block');

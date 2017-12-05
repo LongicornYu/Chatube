@@ -155,7 +155,24 @@ module.exports = function(app,io){
 		socket.on('emailChatHistory', function(data){
 			console.log("Server get email script request");
 			// When the server receives a message, it sends it to the other person in the room.
-			 emailChatTranscript(this.email, data.emailtext);
+			console.log(data.emailtext);
+			var webshot = require('node-webshot');
+
+			var options = {
+			  shotSize: {
+			    width: 'all'
+			  , height: 'all'
+			  }
+			  , siteType:'html'
+			};
+			var chatHistoryImageName=Math.round((Math.random() * 1000000));
+			var recipientEmail = this.email;
+			webshot(data.emailtext, './public/chatScreenShot/chatHistory'+chatHistoryImageName+'.png', options, function(err) {
+			  // screenshot now saved to hello_world.png
+				emailChatTranscript(recipientEmail,'./public/chatScreenShot/chatHistory'+chatHistoryImageName+'.png', 'chatHistory'+chatHistoryImageName+'.png');
+			});
+
+			
 		});
 
 		// Handle the sending of messages
@@ -193,11 +210,13 @@ module.exports = function(app,io){
 	});
 };
 
-function emailChatTranscript(email, msg){
+function emailChatTranscript(email, attachmentPath, attachmentName){
+		console.log(attachmentPath);
+		console.log(attachmentName);
 		console.log(email);
-		console.log(msg);
+		
 		var nodemailer = require('nodemailer');
-	console.log("0");
+	
 		var transporter = nodemailer.createTransport({
 		  service: 'gmail',
 		  auth: {
@@ -205,12 +224,20 @@ function emailChatTranscript(email, msg){
 		    pass: 'chatube531'
 		  }
 		});
-	console.log("1");
+	
+		var msg = '<img src="cid:'+attachmentName+'" />'
+
 		var mailOptions = {
 		  from: 'chatubeapp@gmail.com',
 		  to: email,
 		  subject: 'Chat history',
-		  text: msg
+		  html: msg,
+		  attachments: [{
+		        filename: attachmentName,
+		        path: attachmentPath,
+		        cid: attachmentName //same cid value as in the html img src
+		    }]
+
 		};
 	console.log("2");
 		transporter.sendMail(mailOptions, function(error, info){
