@@ -67,3 +67,11 @@ io.on('connection', function(socket) {
 server.listen(port, function(){
   console.log('Your application is running on https://localhost:' + port);
 });
+
+// Redirect from http port 80 to https
+var http = require('http');
+http.createServer(function (req, res) {
+  console.log(req.url);
+    res.writeHead(301, { "Location": "https://" + req.headers['host'].split(':')[0]+":"+port+ req.url });
+    res.end();
+}).listen(8888);
