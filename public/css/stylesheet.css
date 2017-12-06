@@ -134,7 +134,9 @@ body {
 /* ------------ Section styles ------------ */
 
 .section {
-	margin-top: 120px;
+	margin-top: 100px;
+	height:100%;
+	margin-bottom: 130px;
 }
 
 /* ------ Home ------ */
@@ -338,6 +340,9 @@ body {
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
 	border-radius: 15px;
+	position: fixed;
+	top:20%;
+	left:35%;
 }
 .videoChatInvite h2 {
 	padding-top: 20px;
@@ -434,14 +439,18 @@ body {
 	display: block;
 	margin:0px auto;
 	width: 500px;
-	height: 150px;
+	height: 100px;
 	background-color: #ffffff;
 	border-radius: 3px;
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
 	border-radius: 15px;
+	position: fixed;
+	top:20%;
+	left:35%;
 }
 .videoChatInviteReject h2 {
+	margin-top: 15px;
 	padding-top: 20px;
 	width: auto;
 }
@@ -459,6 +468,9 @@ body {
 	box-shadow:0px 3px 3px #e3e4e6;
 	color: #637277;
 	border-radius: 15px;
+	position: fixed;
+	top:20%;
+	left:35%;
 }
 
 .videoChatInviteWait h2 {
@@ -466,18 +478,22 @@ body {
 	width: auto;
 }
 
-.loader {
+#videoCallCancel {
+	margin-left:225px;
+}
+
+/*.loader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #3498db;
   width: 20px;
   height: 20px;
   margin-left:225px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
+  -webkit-animation: spin 2s linear infinite; 
   animation: spin 2s linear infinite;
 }
 
-/* Safari */
+
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
@@ -487,9 +503,7 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
-
-
+*/
 
 
 /* ------ Person Inside ------*/
@@ -910,7 +924,7 @@ footer {
 	display:none;
 	width:100%;
 	margin: 0 auto 200px;
-	overflow:hidden;
+	overflow:auto;
 }
 
 .chatButton {
@@ -994,6 +1008,10 @@ footer {
 	display:none;
 }
 
+#videoChatArea {
+	display:none;
+}
+
 .left {
 	display:none;
 }
@@ -1036,18 +1054,15 @@ canvas {
 }
 
 /* -------- Video Chat--------- */
+#videoChatArea
+{
+	position:fixed;
+}
+
+
 video {
   max-width: 100%;
   width: 320px;
-}
-
-.videoChatArea
-{
-	display: none;
-	float:left;
-	border:1 solid gray;
-	width:600px;
-	background:white;
 }
 
 .push_button {
@@ -1117,4 +1132,25 @@ video {
 	background-image:-ms-linear-gradient(top, #3EACBA, #48C6D4);
 	background-image:-o-linear-gradient(top, #3EACBA, #48C6D4);
 	background-image:linear-gradient(top, #3EACBA, #48C6D4);
+}
+
+
+.leftPanel {
+  position: fixed;
+  width: 60%;
+  height:100%;
+  overflow-y: auto;
+  float:left;
+
+}
+
+
+.rightPanel {
+  overflow-y: auto;
+  width:39%;
+  height:100%;
+  float:right;
+  zoom: 0.7;
+  -moz-transform: scale(0.7);
+  padding:50px;
 }

@@ -55,6 +55,12 @@ socket.on('joined', function(clientId) {
 
 socket.on('ready', function() {
   console.log('VideoSocket is ready');
+  var videoChatScreen = $("#videoChatArea");
+  var chatscreen = $(".chatscreen");
+
+  videoChatScreen.addClass('leftPanel');
+  chatscreen.addClass('rightPanel');
+
   createPeerConnection(isInitiator, configuration);
 
 /*
