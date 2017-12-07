@@ -238,6 +238,16 @@
 			<br/>
 		</div>
 
+		<div class="videoChatInviteCancelled">
+			<h2><span class="nickname-chat"></span> cancelled the call</h2>
+			<br/>
+		</div>
+
+		<div class="videoChatInviteOnwerCancelled">
+			<h2>You cancelled your call</h2>
+			<br/>
+		</div>
+
 
 		<div class="nomessages">
 
@@ -292,7 +302,7 @@
 		</form>
 	</footer>
 
-	
+
 	<!-- Begin emoji-picker JavaScript -->
 	<script src="../js/config.js"></script>
 	<script src="../js/util.js"></script>
@@ -337,18 +347,24 @@
 		$('#btnEmail').click(function(){
 			generateHtml();
 		});
+
 		function acceptCall(){
 			var sound = document.getElementById("videoCallaudio");
 			//sound.volume = (volume.value)/100.0;
-	    	sound.pause();
+	    sound.pause();
 			socket.emit("videoChatJoined", {senderId: socket.io.engine.id});
 
 		};
 
+		function cancelCall(){
+			console.log("cancel call");
+			socket.emit("videoChatCancelled", {senderId: socket.io.engine.id});
+		}
+
 		function rejectCall(){
 			var sound = document.getElementById("videoCallaudio");
 			//sound.volume = (volume.value)/100.0;
-	    	sound.pause();
+	    sound.pause();
 			socket.emit("videoChatRejected", {senderId: socket.io.engine.id});
 		};
 	</script>

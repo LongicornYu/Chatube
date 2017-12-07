@@ -27,6 +27,8 @@ $(function(){
 		videoChatInviteWait = $(".videoChatInviteWait"),
 		left = $(".left"),
 		noMessages = $(".nomessages"),
+		videoChatInviteCancelled = $(".videoChatInviteCancelled")
+		videoChatInviteOnwerCancelled = $(".videoChatInviteOnwerCancelled")
 		videoChatInvite = $(".videoChatInvite");
 		tooManyPeople = $(".toomanypeople");
 
@@ -93,7 +95,7 @@ $(function(){
 
 	});
 
-	socket.on('renderSnap', function(data){
+
 
 		if (socket.io.engine.id === data.senderId)
 		{
@@ -336,12 +338,9 @@ $(function(){
 	    canvas.width = photoContextW;
 	    canvas.height = photoContextH;
 	    canvas.classList.add('incomingPhoto');
-	    // trail is the element holding the incoming images
-	    li.find('p').after(canvas);
 	    li.find('p').hide();
 
 	    var context = canvas.getContext('2d');
-	    var img = context.createImageData(photoContextW, photoContextH);
 	    img.data.set(data);
 	    context.putImageData(img, 0, 0);
 
@@ -536,5 +535,4 @@ $(function(){
 			videoChatInvite.fadeOut(1200);
 		}
 	}
-
 });

@@ -145,6 +145,11 @@ module.exports = function(app,io){
 					socket.broadcast.to(this.room).emit('ready');
 	    });
 
+		socket.on('videoChatCancelled', function(data){
+					console.log("video call cancel");
+					chat.in(data.senderId).emit('videoChatSelfCancel', data.senderId);
+					socket.broadcast.to(this.room).emit('videoChatSelfCancel', data.senderId);
+		});
 
 		socket.on('videoChatRejected', function(data){
 					chat.in(data.senderId).emit('videoChatRefused', data.senderId);
@@ -170,7 +175,7 @@ module.exports = function(app,io){
 				emailChatTranscript(recipientEmail,'./public/chatScreenShot/chatHistory'+chatHistoryImageName+'.png', 'chatHistory'+chatHistoryImageName+'.png');
 			});
 
-			
+
 		});
 
 		// Handle the sending of messages
@@ -205,7 +210,7 @@ module.exports = function(app,io){
 
 function emailChatTranscript(email, attachmentPath, attachmentName){
 		var nodemailer = require('nodemailer');
-	
+
 		var transporter = nodemailer.createTransport({
 		  service: 'gmail',
 		  auth: {
@@ -213,7 +218,7 @@ function emailChatTranscript(email, attachmentPath, attachmentName){
 		    pass: 'chatube531'
 		  }
 		});
-	
+
 		var msg = '<img src="cid:'+attachmentName+'" />'
 
 		var mailOptions = {

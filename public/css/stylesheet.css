@@ -374,7 +374,7 @@ body {
     margin: 0px 40px 0px 120px;
     border-radius: 100%;
     border: solid 2px #fff;
-   
+
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
@@ -455,6 +455,49 @@ body {
 	width: auto;
 }
 
+/* ----- videoChatInviteCancelled-----*/
+.videoChatInviteCancelled {
+	text-align:center;
+	display: block;
+	margin:0px auto;
+	width: 500px;
+	height: 100px;
+	background-color: #ffffff;
+	border-radius: 3px;
+	box-shadow:0px 3px 3px #e3e4e6;
+	color: #637277;
+	border-radius: 15px;
+	position: fixed;
+	top:20%;
+	left:35%;
+}
+.videoChatInviteCancelled h2 {
+	margin-top: 15px;
+	padding-top: 20px;
+	width: auto;
+}
+
+/* ----- videoChatInviteOnwerCancelled-----*/
+.videoChatInviteOnwerCancelled {
+	text-align:center;
+	display: block;
+	margin:0px auto;
+	width: 500px;
+	height: 100px;
+	background-color: #ffffff;
+	border-radius: 3px;
+	box-shadow:0px 3px 3px #e3e4e6;
+	color: #637277;
+	border-radius: 15px;
+	position: fixed;
+	top:20%;
+	left:35%;
+}
+.videoChatInviteOnwerCancelled h2 {
+	margin-top: 15px;
+	padding-top: 20px;
+	width: auto;
+}
 
 /* ----- videoChatInviteWait-----*/
 .videoChatInviteWait {
@@ -489,7 +532,7 @@ body {
   width: 20px;
   height: 20px;
   margin-left:225px;
-  -webkit-animation: spin 2s linear infinite; 
+  -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
 
@@ -1004,6 +1047,14 @@ footer {
 	display: none;
 }
 
+.videoChatInviteCancelled {
+	display: none;
+}
+
+.videoChatInviteOnwerCancelled {
+	display: none;
+}
+
 .invite-textfield {
 	display:none;
 }
@@ -1059,10 +1110,35 @@ canvas {
 	position:fixed;
 }
 
-
 video {
-  max-width: 100%;
-  width: 320px;
+  height: 225px;
+  margin: 0 0 20px 0;
+  vertical-align: top;
+  width: calc(50% - 12px);
+}
+
+video#localVideo {
+  margin: 0 20px 20px 0;
+}
+
+@media screen and (max-width: 400px) {
+  button {
+    width: 83px;
+  }
+
+  button {
+    margin: 0 11px 10px 0;
+  }
+
+
+  video {
+    height: 90px;
+    margin: 0 0 10px 0;
+    width: calc(50% - 7px);
+  }
+  video#localVideo {
+    margin: 0 10px 20px 0;
+  }
 }
 
 .push_button {
