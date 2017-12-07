@@ -95,15 +95,32 @@ $(function(){
 
 	});
 
+	socket.on('videoChatSelfCancel', function(senderId){
 
-
-		if (socket.io.engine.id === data.senderId)
+		if (socket.io.engine.id === senderId)
 		{
-			renderPhotobuffertoArea(data.buf, true, data.user, data.img);
+			showMessage("VideoChatSelfCancelled");
 		}
 		else
 		{
-			renderPhotobuffertoArea(data.buf, false,data.user, data.img);
+			var sound = document.getElementById("videoCallaudio");
+			//sound.volume = (volume.value)/100.0;
+			sound.pause();
+			showMessage("VideoChatOwnerCancelled");
+		}
+
+	});
+
+
+	socket.on('renderSnap', function(data){
+		console.log("start render image");
+		if (socket.io.engine.id === data.senderId)
+		{
+			renderPhotobuffertoArea(data.buf, data.width, data.height, true, data.user, data.img);
+		}
+		else
+		{
+			renderPhotobuffertoArea(data.buf, data.width, data.height, false,data.user, data.img);
 		}
 
 	});
@@ -309,7 +326,7 @@ $(function(){
 	},60000);
 
 
-	function renderPhotobuffertoArea(data,ismine, user,imgg) {
+	function renderPhotobuffertoArea(data,width, height,ismine, user,imgg) {
 
 	    var now = moment();
 			var who = '';
@@ -335,15 +352,18 @@ $(function(){
 
 
 	    var canvas = document.createElement('canvas');
-	    canvas.width = photoContextW;
-	    canvas.height = photoContextH;
+	    canvas.width = width;
+	    canvas.height = height;
 	    canvas.classList.add('incomingPhoto');
-	    li.find('p').hide();
 
 	    var context = canvas.getContext('2d');
+	    var img = context.createImageData(width, height);
 	    img.data.set(data);
 	    context.putImageData(img, 0, 0);
 
+			// trail is the element holding the incoming images
+	    li.find('p').after(canvas);
+	    li.find('p').hide();
 
 			if(who==='me')
 			{
@@ -533,6 +553,18 @@ $(function(){
 			section.children().css('display', 'none');
 			chatScreen.css('display','block');
 			videoChatInvite.fadeOut(1200);
+		}
+		else if (status === "VideoChatSelfCancelled") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			videoChatInvite.fadeOut(1200);
+			videoChatInviteOnwerCancelled.fadeIn(1200);
+		}
+		else if (status === "VideoChatOwnerCancelled") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			videoChatInviteWait.fadeOut(1200);
+			videoChatInviteCancelled.fadeIn(1200);
 		}
 	}
 });
