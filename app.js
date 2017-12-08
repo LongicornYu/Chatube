@@ -10,7 +10,7 @@ var express = require('express'),
  fs=require('fs'),
  https = require('https');
  app = express();
-
+var WebSocket = require('ws');
 var options = {
   key: fs.readFileSync('./public/sslKeys/key.pem'),
   cert: fs.readFileSync('./public/sslKeys/cert.pem')
