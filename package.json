@@ -22,7 +22,6 @@
     "node-webshot": "^1.0.2",
     "nodemailer": "^4.4.0",
     "rm-emoji-picker": "^0.3.31",
-    "socket.io": "^1.0.6",
-    "ws": "^3.3.2"
+    "socket.io": "^1.0.6"
   }
 }
