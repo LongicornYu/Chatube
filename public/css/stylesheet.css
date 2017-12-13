@@ -1127,14 +1127,15 @@ canvas {
 	z-index: 2;
 	position: absolute;
 	width:30%;
-	margin-left: 130px;
+	border:1px solid grey;
 }
 
 #remoteVideo
 {
 	z-index: 1;
 	position: absolute;
-	width:100%
+	width:100%;
+	border:1px solid grey;
 }
 
 
@@ -1226,5 +1227,5 @@ canvas {
   float:right;
   zoom: 0.7;
   -moz-transform: scale(0.7);
-  padding:50px;
+  --padding:50px;
 }
