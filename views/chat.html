@@ -297,15 +297,20 @@
 	<footer>
 		<form id="chatform">
 			<div id = "container">
-				<button class="chatButton" title="Voice to Text" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
-				<button class="chatButton" title="Audio Chat" id="btnAudioChat"><i class="fa fa-phone" id="iAudioChat"></i></button>
-				<button class="chatButton" title="Video Chat" id="btnVideoChat"><i class="fa fa-video-camera" id="iVideoChat"></i></button>
-				<button class="chatButton" title="Email Chat Transcript" id="btnEmail"><i class="fa fa-envelope-o" id="iEmail"></i></button>
-				<button class="chatButton" title="Download Transcript" id="btnDownload"><i class="fa fa-download" id="iDownload"></i></button>
+				<div class="action">
+					<button class="chatButton icon first" title="Voice to Text" id="btnMicrophone"><i class="fa fa-microphone" id="iMicrophone"></i></button>
+					<button class="chatButton icon" title="Audio Chat" id="btnAudioChat"><i class="fa fa-phone" id="iAudioChat"></i></button>
+					<button class="chatButton icon" title="Video Chat" id="btnVideoChat"><i class="fa fa-video-camera" id="iVideoChat"></i></button>
+					<button class="chatButton icon" title="Email Chat Transcript" id="btnEmail"><i class="fa fa-envelope-o" id="iEmail"></i></button>
+					<button class="chatButton icon last" title="Download Transcript" id="btnDownload"><i class="fa fa-download" id="iDownload"></i></button>
+					<div class="actionMenu">
+						<img src="../img/menu.png"/>
+					</div>
+				</div>
 				<p class="lead emoji-picker-container" style="display:inline-block; width:500px; float:left">
-						<textarea class="form-control textarea-control" rows="2" placeholder="Ctrl+Enter to submit" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
+						<textarea class="form-control textarea-control" rows="2" placeholder="Ctrl + Enter to submit" id="text-input" data-emojiable="true" data-emoji-input="unicode"></textarea>
 				</p>
-				<input type="submit" id="submit" value="SEND"/>
+				<input type="image" src="../img/send.png" id="submit" alt="Submit Form" />
 			</div>
 		</form>
 	</footer>
@@ -375,6 +380,10 @@
 	    sound.pause();
 			socket.emit("videoChatRejected", {senderId: socket.io.engine.id});
 		};
+
+		$(".actionMenu").mouseover(function(){
+         $(".icon").css("display", "");
+     	});
 	</script>
 
 
