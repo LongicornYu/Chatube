@@ -194,8 +194,9 @@ module.exports = function(app,io){
 		});
 
 		socket.on('message', function(message) {
+			console.log("got message"+message);
 			// for a real app, would be room-only (not broadcast)
-			socket.broadcast.to(socket.room).emit('message', message);
+			socket.broadcast.to(this.room).emit('ice-message', message);
 		});
 
 		socket.on('ipaddr', function() {

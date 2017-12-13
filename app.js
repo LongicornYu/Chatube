@@ -11,12 +11,16 @@ var express = require('express'),
  https = require('https');
  app = express();
 
+const WebSocket = require('ws');
+const WebSocketServer = WebSocket.Server;
+
+
 var options = {
   key: fs.readFileSync('./public/sslKeys/key.pem'),
   cert: fs.readFileSync('./public/sslKeys/cert.pem')
 }
 
-var server = https.createServer(options, app);
+var httpsServer = https.createServer(options, app);
 
 // This is needed if the app is run on heroku:
 
@@ -25,7 +29,7 @@ var port = process.env.PORT || 1024;
 // Initialize a new socket.io object. It is bound to
 // the express app, which allows them to coexist.
 
-var io = require('socket.io')(server);
+var io = require('socket.io')(httpsServer);
 
 // Require the configuration and the routes files, and pass
 // the app and io as arguments to the returned functions.
@@ -64,7 +68,7 @@ io.on('connection', function(socket) {
 });
 
 
-server.listen(port, function(){
+httpsServer.listen(port, function(){
   console.log('Your application is running on https://localhost:' + port);
 });
 

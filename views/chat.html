@@ -261,7 +261,7 @@
 		</div>
 
 		<div id="videoChatArea" >
-			<div id="videoCanvas">
+			<!--<div id="videoCanvas">
 				<video id="camera" autoplay></video>
 				<audio id="mic" autoplay></audio>
 				<canvas id="photo"></canvas>
@@ -273,7 +273,15 @@
 			<div id="incoming">
 				<div id="trail"></div>
 			</div>
-		</div>
+		</div>-->
+		<video id="localVideo" autoplay muted style="width:40%;"></video>
+        <video id="remoteVideo" autoplay style="width:40%;"></video>
+
+        <br />
+
+        <input type="button" id="start" onclick="start(true)" value="Start Video"></input>
+
+
 		<div class="chatscreen">
 			<ul class="chats">
 				<!-- The chat messages will go here -->
@@ -376,7 +384,8 @@
 	<script src="../js/voiceinput.js"></script>
 	<script src="../js/fireworks.js"></script>
 	<script src="../js/adapter.js"></script>
-	<script src="../js/videoChat.js"></script>
+	<!--<script src="../js/videoChat.js"></script>-->
+	<script src="../js/videoAudioChat.js"></script>
 </body>
 
 </html>
