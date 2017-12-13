@@ -842,7 +842,7 @@ body {
 	margin-left: 20px;
 	margin-bottom:30px;
 	min-width: 160px;
-	min-height: 10px;
+	min-height: 100px;
 	max-width: 510px;
 	background-color: #FFF;
 	border-radius: 15px;
@@ -851,6 +851,7 @@ body {
 	line-height: 1.4;
 	word-wrap: break-word;
 	white-space: pre;
+	overflow:hidden;
 }
 
 .chats .me #postedMessage {
@@ -869,6 +870,17 @@ body {
 	line-height: 1.4;
 	word-wrap: break-word;
 	white-space: pre;
+	overflow:hidden;
+}
+
+.chats .me #postedMessage canvas{
+	height:100%;
+	width:100%;
+}
+
+.chats .you #postedMessage canvas{
+	height:100%;
+	width:100%;
 }
 
 .chats .me #postedMessage p{

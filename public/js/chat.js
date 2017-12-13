@@ -116,11 +116,11 @@ $(function(){
 		console.log("start render image");
 		if (socket.io.engine.id === data.senderId)
 		{
-			renderPhotobuffertoArea(data.buf, data.width, data.height, true, data.user, data.img);
+			renderPhotobuffertoArea(data.buf, true, data.user, data.img);
 		}
 		else
 		{
-			renderPhotobuffertoArea(data.buf, data.width, data.height, false,data.user, data.img);
+			renderPhotobuffertoArea(data.buf,false,data.user, data.img);
 		}
 
 	});
@@ -326,8 +326,8 @@ $(function(){
 	},60000);
 
 
-	function renderPhotobuffertoArea(data,width, height,ismine, user,imgg) {
-
+	function renderPhotobuffertoArea(data,ismine, user,imgg) {
+			console.log("start rendering.......");
 	    var now = moment();
 			var who = '';
 
@@ -349,17 +349,18 @@ $(function(){
 						'<div id="divpostedMessage"></div>' +
 					'</li>');
 
-
-
+			console.log(data.count);
 	    var canvas = document.createElement('canvas');
-	    canvas.width = width;
-	    canvas.height = height;
-	    canvas.classList.add('incomingPhoto');
+	    canvas.width = 1000;
+	    canvas.height = 1000;
 
-	    var context = canvas.getContext('2d');
-	    var img = context.createImageData(width, height);
-	    img.data.set(data);
-	    context.putImageData(img, 0, 0);
+			var canvasWidth  = canvas.width;
+			var canvasHeight = canvas.height;
+			var ctx = canvas.getContext('2d');
+			var imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+
+			imageData.data.set(data);
+			ctx.putImageData(imageData, 0, 0);
 
 			// trail is the element holding the incoming images
 	    li.find('p').after(canvas);

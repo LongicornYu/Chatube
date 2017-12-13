@@ -134,13 +134,16 @@ module.exports = function(app,io){
 		});
 
 		socket.on('videoChat', function(data){
-	        socket.emit('created', data.senderId);
+	        socket.emit('created', {senderId:data.senderId, user: this.username, avatar:this.avatar});
+				  socket.broadcast.to(this.room).emit('created', {senderId: data.senderId, user: this.username,avatar: this.avatar});
 	        socket.emit('videoChatInvite', {senderId: data.senderId, avatar: this.avatar});
 	        socket.broadcast.to(this.room).emit('videoChatInvite', {senderId: data.senderId, avatar: this.avatar});
 	    });
 
 		socket.on('videoChatJoined', function(data){
-					socket.emit('joined', data.senderId);
+					socket.emit('joined',{senderId:data.senderId, user: this.username, avatar:this.avatar});
+				  socket.broadcast.to(this.room).emit('joined', {senderId:data.senderId, user: this.username, avatar:this.avatar});
+
 					chat.in(data.senderId).emit('ready');
 					socket.broadcast.to(this.room).emit('ready');
 	    });
@@ -185,6 +188,7 @@ module.exports = function(app,io){
 		});
 
 		socket.on('snapReceived', function(data){
+			console.log(data);
 			chat.in(data.senderId).emit('renderSnap', {buf:data.buf, senderId:data.senderId, user:this.username, img:this.avatar});
 			socket.broadcast.to(this.room).emit('renderSnap', {buf:data.buf, senderId:data.senderId, user:this.username, img:this.avatar});
 		});
