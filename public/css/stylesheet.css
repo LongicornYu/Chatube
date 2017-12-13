@@ -1122,36 +1122,22 @@ canvas {
 	position:fixed;
 }
 
-video {
-  height: 225px;
-  margin: 0 0 20px 0;
-  vertical-align: top;
-  width: calc(50% - 12px);
+#localVideo
+{
+	z-index: 2;
+	position: absolute;
+	width:30%;
+	margin-left: 130px;
 }
 
-video#localVideo {
-  margin: 0 20px 20px 0;
+#remoteVideo
+{
+	z-index: 1;
+	position: absolute;
+	width:100%
 }
 
-@media screen and (max-width: 400px) {
-  button {
-    width: 83px;
-  }
 
-  button {
-    margin: 0 11px 10px 0;
-  }
-
-
-  video {
-    height: 90px;
-    margin: 0 0 10px 0;
-    width: calc(50% - 7px);
-  }
-  video#localVideo {
-    margin: 0 10px 20px 0;
-  }
-}
 
 .push_button {
 	position: relative;
