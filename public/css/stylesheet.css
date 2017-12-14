@@ -10,7 +10,7 @@
 
 
 body {
-	background-color: #f0f1f3 !important;
+	--background-color: #f0f1f3 !important;
 	color:#667073;
 	font: 16px/1.3 'Arial',sans-serif;
 }
@@ -19,6 +19,11 @@ body {
 
 
 /* ------------ Header styles ------------ */
+
+html {
+	background-image: url("../img/background.jpg");
+
+}
 
 /*------------- Volume picker ------------ */
 #volume-slider{
@@ -361,9 +366,6 @@ body {
 	border-radius: 50%;
 }
 
-body {
-  background: #71AFFF;
-}
 
 .call-animation {
     background: #fff;
@@ -972,6 +974,122 @@ footer {
 	cursor:pointer;
 }
 
+*::after, *::before {
+  box-sizing: inherit;
+}
+
+body .send-button {
+	display:inline-block;
+	margin:40px 10px 10px 110px;
+	transform: translate(-50%, -50%);
+}
+
+@keyframes icon-animation {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  33% {
+    transform: rotate(-120deg) scale(2);
+  }
+  66% {
+    transform: rotate(-240deg) scale(2);
+  }
+  100% {
+    transform: rotate(-360deg) scale(1);
+  }
+}
+
+@keyframes input-shadow {
+  0% {
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+  }
+  40% {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: none;
+  }
+  70% {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.icon-wrapper-animation {
+  animation: icon-animation 1.5s linear;
+  transition: color 0.6s ease;
+  color: #66bb6a;
+}
+
+.clicked {
+  transform: translate(-50%, calc(-50% + 1px)) !important;
+  transition: transform .15s ease;
+  animation: input-shadow .15s ease;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+}
+
+.clicked > .text {
+  transform: translateY(1px);
+  transition: transform .15s ease-out;
+}
+
+body .send-button {
+  background-color: #4ED0D1;
+  width: 110px;
+  height: 45px;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  user-select: none;
+  transition: transform .15s;
+  text-shadow: 1px 2px 1px rgba(77, 9, 36, 0.6);
+}
+
+body .send-button .text {
+  position: absolute;
+  left: 10px;
+  font-size: 12px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  line-height: 45px;
+  font-family: "Roboto";
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+}
+
+body .send-button .icon-wrapper {
+  position: absolute;
+  right: -65px;
+  bottom: -10px;
+  width: 212px;
+  height: 200px;
+  border-radius: 50%;
+  line-height: 45px;
+  color: white;
+}
+
+body .send-button .icon-wrapper [class*="icon-"] {
+  position: absolute;
+  left: 110px;
+  bottom: 13px;
+  transition: color 0.6s ease;
+}
+
+body .send-button .icon-wrapper .icon-1 {
+  transform: rotate(15deg);
+  font-size: 15px;
+  font-size: 1.5rem;
+  opacity: 1;
+}
+
+body .send-button .icon-wrapper .icon-2 {
+  opacity: 0;
+  font-size: 15px;
+  font-size: 1.5rem;
+}
 
 /* ------ Chat function buttons ------*/
 
@@ -1097,7 +1215,7 @@ footer {
   display: inline-block;
   cursor: default;
   padding: 0;
-  margin: 20px 25px 0 20%;
+  margin: 10px 10px 0 5%;
   position: relative;
   text-align: center;
   float:left;
@@ -1114,19 +1232,20 @@ footer {
   margin: 0 0;
 }
 
-.icon, .actionMenu {
+.icon {
   background-color: #4ED0D1;
   line-height: 3.5rem;
 }
 
 .actionMenu img
 {
-	height:40px;
-	width:40px;
-	margin-top:20px;
+	height:60px;
+	width:120px;
+	float:right;
 }
 
 .actionMenu {
+	background-color: white;
   border-radius: 1rem;
   position: absolute;
   font-size: 0.85em;
@@ -1147,11 +1266,11 @@ footer {
   border-radius: 0;
   cursor: pointer;
   display: inline-block;
-  height: 3.5em;
+  height: 5em;
   margin: 0 -.5em;
   -webkit-transition: background-color .5s ease-out, border-radius .5s .25s ease-out, margin .5s .25s ease-out;
   transition: background-color .5s ease-out, border-radius .5s .25s ease-out, margin .5s .25s ease-out;
-  width: 3.5em;
+  width: 5em;
 }
 
 .icon.first {
