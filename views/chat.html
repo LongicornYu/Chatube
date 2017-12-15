@@ -278,9 +278,15 @@
 			<div>
 				<input type="button" id="start" onclick="start(true)" value="Start Video"></input>
 			</div>
-			<div>
+			<div id="videoControlArea">
 				<video id="localVideo" autoplay muted></video>
     		<video id="remoteVideo" autoplay></video>
+				<div id="videoTimer">
+					<span id="minutes"></span>:<span id="seconds"></span>
+				</div>
+				<div id="videoControlPanel">
+						<img class="img-circle" src="../img/hangup.png" alt="EndCall" id="videoCallEnd" onclick="endCall(); return false;" width="135"/>
+				</div>
 			</div>
     </div>
 		<div class="chatscreen">
@@ -386,6 +392,10 @@
 			//sound.volume = (volume.value)/100.0;
 	    sound.pause();
 			socket.emit("videoChatRejected", {senderId: socket.io.engine.id});
+		};
+
+		function endCall(){
+			socket.emit("videoChatEnded", {senderId: socket.io.engine.id});
 		};
 
 		$(".actionMenu").mouseover(function(){
