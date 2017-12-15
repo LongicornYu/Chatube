@@ -150,6 +150,10 @@ html {
 .homesection {
 	text-align:center;
 	margin-top:20px;
+	background: rgba(255,255,255,0.5);
+	margin: 0 auto;
+	width: 400px;
+	height: 500px;
 }
 
 .node {
@@ -183,7 +187,6 @@ html {
 	display: block;
 	margin:0px auto;
 	border-radius: 3px;
-	box-shadow: 0px 5px 5px #e4e8e7;
 	text-decoration: none;
 	margin-bottom: 40px;
 	color: #eeffff;
@@ -1245,8 +1248,9 @@ body .send-button .icon-wrapper .icon-2 {
 }
 
 .actionMenu {
-	background-color: white;
+  background-color: white;
   border-radius: 1rem;
+  height:5.2em;
   position: absolute;
   font-size: 0.85em;
   font-weight: 900;
