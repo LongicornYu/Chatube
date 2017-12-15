@@ -288,6 +288,8 @@
 						<img class="img-circle" src="../img/mutedMic.png" alt="MuteCall" id="VideoCallMute" onclick="unmuteCall(); return false;" width="135"/>
 						<img class="img-circle" src="../img/unMutedMic.png" alt="UnMuteCall" id="VideoCallUnMute" onclick="muteCall(); return false;" width="135"/>
 						<img class="img-circle" src="../img/hangup.png" alt="EndCall" id="videoCallEnd" onclick="endCall(); return false;" width="135"/>
+						<img class="img-circle" src="../img/videoOn.png" alt="TurnOffMyCamera" id="VideoOff" onclick="turnOffVideo(); return false;" width="135"/>
+						<img class="img-circle" src="../img/videoOff.png" alt="TurnOnMyCamera" id="VideoOn" onclick="turnOnVideo(); return false;" width="135"/>
 				</div>
 			</div>
     </div>
@@ -395,6 +397,20 @@
 	    sound.pause();
 			socket.emit("videoChatRejected", {senderId: socket.io.engine.id});
 		};
+
+		function turnOffVideo(){
+
+			$('#VideoOn').toggle();
+			$('#VideoOff').toggle();
+			localStream.getVideoTracks()[0].enabled = false;
+		}
+
+		function turnOnVideo(){
+
+			$('#VideoOn').toggle();
+			$('#VideoOff').toggle();
+			localStream.getVideoTracks()[0].enabled = true;
+		}
 
 		function muteCall(){
 			$('#VideoCallMute').toggle();

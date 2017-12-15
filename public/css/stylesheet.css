@@ -1435,7 +1435,7 @@ canvas {
   transition: box-shadow 400ms cubic-bezier(0.2, 0, 0.7, 1), transform 200ms cubic-bezier(0.2, 0, 0.7, 1), -webkit-box-shadow 400ms cubic-bezier(0.2, 0, 0.7, 1), -webkit-transform 200ms cubic-bezier(0.2, 0, 0.7, 1);
 }
 
-#videoCallEnd:hover, #VideoCallMute:hover, #VideoCallUnMute:hover{
+#videoCallEnd:hover, #VideoCallMute:hover, #VideoCallUnMute:hover, #VideoOff:hover{
   	-webkit-box-shadow: 0 0 1px 5px rgba(138, 59, 88, 0.4), 0 0 1px 10px rgba(138, 59, 88, 0.1), 0 0 1px 15px rgba(138, 59, 88, 0.1);
 	          box-shadow: 0 0 1px 5px rgba(138, 59, 88, 0.4), 0 0 1px 10px rgba(138, 59, 88, 0.1), 0 0 1px 15px rgba(138, 59, 88, 0.1);
 }
@@ -1445,20 +1445,42 @@ canvas {
 	height:20px;
 	width:20px;
 	background:red;
-	left:24px;
-	top:27px;
+	left:25%;
+	top:27%;
 	position: absolute;
 	display: none;
 
 }
+
+#VideoOff{
+	padding:10px;
+	height:20px;
+	width:20px;
+	background:green;
+	left:70%;
+	top:27%;
+	position: absolute;
+}
+
+#VideoOn{
+	padding:10px;
+	height:20px;
+	width:20px;
+	background:red;
+	left:70%;
+	top:27%;
+	position: absolute;
+	display: none;
+}
+
 
 #VideoCallUnMute{
 	padding:10px;
 	height:20px;
 	width:20px;
 	background:green;
-	left:24px;
-	top:27px;
+	left:25%;
+	top:27%;
 	position: absolute;
 }
 
