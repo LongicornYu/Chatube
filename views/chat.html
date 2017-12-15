@@ -285,8 +285,8 @@
 					<span id="minutes"></span>:<span id="seconds"></span>
 				</div>
 				<div id="videoControlPanel">
-						<img class="img-circle" src="../img/mutedMic.png" alt="MuteCall" id="VideoCallMute" onclick="muteCall(); return false;" width="135"/>
-						<img class="img-circle" src="../img/unMutedMic.png" alt="UnMuteCall" id="VideoCallUnMute" onclick="unmuteCall(); return false;" width="135"/>
+						<img class="img-circle" src="../img/mutedMic.png" alt="MuteCall" id="VideoCallMute" onclick="unmuteCall(); return false;" width="135"/>
+						<img class="img-circle" src="../img/unMutedMic.png" alt="UnMuteCall" id="VideoCallUnMute" onclick="muteCall(); return false;" width="135"/>
 						<img class="img-circle" src="../img/hangup.png" alt="EndCall" id="videoCallEnd" onclick="endCall(); return false;" width="135"/>
 				</div>
 			</div>
@@ -400,14 +400,14 @@
 			$('#VideoCallMute').toggle();
 			$('#VideoCallUnMute').toggle();
 
-			mediaStream.getAudioTracks()[0].enabled = false;
+			localStream.getAudioTracks()[0].enabled = false;
 		}
 
 		function unmuteCall(){
 			$('#VideoCallMute').toggle();
 			$('#VideoCallUnMute').toggle();
 
-			mediaStream.getAudioTracks()[0].enabled = true;
+			localStream.getAudioTracks()[0].enabled = true;
 		}
 
 		function endCall(){
