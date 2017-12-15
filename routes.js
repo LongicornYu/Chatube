@@ -181,6 +181,14 @@ module.exports = function(app,io){
 
 		});
 
+
+		socket.on('videoChatEnded', function(data){
+			console.log("end video chat");
+			// When the server receives a message, it sends it to the other person in the room.
+			socket.broadcast.to(socket.room).emit('videoChatEndClient', data);
+		});
+
+
 		// Handle the sending of messages
 		socket.on('msg', function(data){
 			// When the server receives a message, it sends it to the other person in the room.

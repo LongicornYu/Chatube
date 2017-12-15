@@ -179,6 +179,7 @@ function gotRemoteStream(event) {
     $("#videoTimer").toggle();
     $("#videoControlPanel").toggle();
 
+    remoteVideo.style.display = "block";
 
     var sec = 0;
     function pad ( val ) { return val > 9 ? val : "0" + val; }

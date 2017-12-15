@@ -285,6 +285,8 @@
 					<span id="minutes"></span>:<span id="seconds"></span>
 				</div>
 				<div id="videoControlPanel">
+						<img class="img-circle" src="../img/mutedMic.png" alt="MuteCall" id="VideoCallMute" onclick="muteCall(); return false;" width="135"/>
+						<img class="img-circle" src="../img/unMutedMic.png" alt="UnMuteCall" id="VideoCallUnMute" onclick="unmuteCall(); return false;" width="135"/>
 						<img class="img-circle" src="../img/hangup.png" alt="EndCall" id="videoCallEnd" onclick="endCall(); return false;" width="135"/>
 				</div>
 			</div>
@@ -394,7 +396,32 @@
 			socket.emit("videoChatRejected", {senderId: socket.io.engine.id});
 		};
 
+		function muteCall(){
+			$('#VideoCallMute').toggle();
+			$('#VideoCallUnMute').toggle();
+
+			mediaStream.getAudioTracks()[0].enabled = false;
+		}
+
+		function unmuteCall(){
+			$('#VideoCallMute').toggle();
+			$('#VideoCallUnMute').toggle();
+
+			mediaStream.getAudioTracks()[0].enabled = true;
+		}
+
 		function endCall(){
+			localStream.getAudioTracks()[0].stop();
+			localStream.getVideoTracks()[0].stop();
+
+			var videoChatScreen = $("#videoChatArea");
+		  var chatscreen = $(".chatscreen");
+			var section = $(".section");
+		  videoChatScreen.removeClass('leftPanel');
+		  chatscreen.removeClass('rightPanel');
+		  section.children().css('display', 'none');
+		  chatscreen.css('display','block');
+
 			socket.emit("videoChatEnded", {senderId: socket.io.engine.id});
 		};
 
