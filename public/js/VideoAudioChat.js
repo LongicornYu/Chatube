@@ -6,6 +6,7 @@
 var localVideo;
 var remoteVideo;
 var peerConnection;
+var endCallButton;
 var uuid;
 var localStream;
 var peerConnectionConfig = {
@@ -29,6 +30,7 @@ socket.on('ipaddr', function(ipaddr) {
 });
 
 socket.on('created', function(data) {
+
   if(data.senderId == socket.io.engine.id)
   {
     pageReady();
@@ -88,16 +90,21 @@ function pageReady() {
 
     uuid = uuid();
 
+        console.log("1");
     localVideo = document.getElementById('localVideo');
     remoteVideo = document.getElementById('remoteVideo');
-
+    endCallButton = document.getElementById('videoCallEnd');
     var constraints = {
         video: true,
         audio: true,
     };
 
+        console.log("2");
     if(navigator.mediaDevices.getUserMedia) {
+
+          console.log("3");
         navigator.mediaDevices.getUserMedia(constraints).then(getUserMediaSuccess).catch(errorHandler);
+
     } else {
         alert('Your browser does not support getUserMedia API');
     }
@@ -107,6 +114,10 @@ function getUserMediaSuccess(stream) {
     console.log("get media successfully:" + stream );
     localStream = stream;
     localVideo.src = window.URL.createObjectURL(stream);
+
+    endCallButton.addEventListener("click", function (evt) {
+      socket.emit("message",{'message':JSON.stringify({'closeConnection': 'true', 'uuid':''}), "senderId":socket.io.engine.id});
+    });
 }
 
 function start(isCaller) {
@@ -128,7 +139,7 @@ function iceCallback(event) {
     if (event.candidate) {
         //var candidate = event.candidate;
         //socSend("candidate", candidate. event.target.id);     // OLD CODE
-        socket.emit("message",JSON.stringify({'ice': event.candidate, 'uuid': uuid}));         // NEW CODE
+        socket.emit("message",{'message':JSON.stringify({'ice': event.candidate, 'uuid': uuid}), "senderId":socket.io.engine.id});         // NEW CODE
     }
 }
 
@@ -136,7 +147,9 @@ function gotMessageFromServer(message) {
     console.log(
       "get message from server?"
     );
+
     if(!peerConnection) start(false);
+    console.log(JSON.parse(message));
 
     var signal = JSON.parse(message);
     console.log("singal"+ signal);
@@ -152,13 +165,34 @@ function gotMessageFromServer(message) {
         }).catch(errorHandler);
     } else if(signal.ice) {
         peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice)).catch(errorHandler);
+    } else if (signal.closeConnection)
+    {
+      endCall();
     }
 }
+
+function endCall() {
+  peerConnection.close();
+  localStream.getAudioTracks()[0].stop();
+  localStream.getVideoTracks()[0].stop();
+
+  localVideo.src = "";
+  remoteVideo.src = "";
+
+  var videoChatScreen = $("#videoChatArea");
+  var chatscreen = $(".chatscreen");
+  var section = $(".section");
+  videoChatScreen.removeClass('leftPanel');
+  chatscreen.removeClass('rightPanel');
+  section.children().css('display', 'none');
+  chatscreen.css('display','block');
+
+};
 
 function gotIceCandidate(event) {
   console.log("get ice candidate");
     if(event.candidate != null) {
-        socket.emit("message",JSON.stringify({'ice': event.candidate, 'uuid': uuid}));
+        socket.emit("message",{'message':JSON.stringify({'ice': event.candidate, 'uuid': uuid}), 'senderId':socket.io.engine.id});
     }
     console.log("replied ice candidate"+ event.candiadate);
 }
@@ -167,7 +201,7 @@ function createdDescription(description) {
     console.log('got description');
 
     peerConnection.setLocalDescription(description).then(function() {
-        socket.send(JSON.stringify({'sdp': peerConnection.localDescription, 'uuid': uuid}));
+        socket.emit("message",{'message':JSON.stringify({'sdp': peerConnection.localDescription, 'uuid': uuid}), 'senderId':socket.io.engine.id});
         console.log("local description sent");
     }).catch(errorHandler);
 }
@@ -196,9 +230,9 @@ function errorHandler(error) {
 // Taken from http://stackoverflow.com/a/105074/515584
 // Strictly speaking, it's not a real UUID, but it gets the job done here
 function uuid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  }
-
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+function s4() {
+  return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 }

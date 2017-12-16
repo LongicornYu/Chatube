@@ -125,21 +125,6 @@ $(function(){
 
 	});
 
-	socket.on('videoChatEndClient', function(data) {
-		localStream.getAudioTracks()[0].stop();
-		localStream.getVideoTracks()[0].stop();
-
-		var videoChatScreen = $("#videoChatArea");
-		var chatscreen = $(".chatscreen");
-		var section = $(".section");
-		videoChatScreen.removeClass('leftPanel');
-		chatscreen.removeClass('rightPanel');
-		section.children().css('display', 'none');
-		chatscreen.css('display','block');
-
-
-	});
-
 	// receive the names and avatars of all people in the chat room
 	socket.on('peopleinchat', function(data){
 

@@ -181,14 +181,6 @@ module.exports = function(app,io){
 
 		});
 
-
-		socket.on('videoChatEnded', function(data){
-			console.log("end video chat");
-			// When the server receives a message, it sends it to the other person in the room.
-			socket.broadcast.to(socket.room).emit('videoChatEndClient', data);
-		});
-
-
 		// Handle the sending of messages
 		socket.on('msg', function(data){
 			// When the server receives a message, it sends it to the other person in the room.
@@ -201,10 +193,10 @@ module.exports = function(app,io){
 			socket.broadcast.to(this.room).emit('renderSnap', {buf:data.buf, senderId:data.senderId, user:this.username, img:this.avatar});
 		});
 
-		socket.on('message', function(message) {
-			console.log("got message"+message);
+		socket.on('message', function(data) {
 			// for a real app, would be room-only (not broadcast)
-			socket.broadcast.to(this.room).emit('ice-message', message);
+			chat.in(data.senderId).emit('ice-message', data.message);
+			socket.broadcast.to(this.room).emit('ice-message', data.message);
 		});
 
 		socket.on('ipaddr', function() {
