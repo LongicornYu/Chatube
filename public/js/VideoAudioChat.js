@@ -88,7 +88,7 @@ socket.on('ice-message', function(message) {
 ****************************************************************************/
 function pageReady() {
 
-    uuid = uuid();
+    uuid = generateuuid();
 
         console.log("1");
     localVideo = document.getElementById('localVideo');
@@ -229,7 +229,7 @@ function errorHandler(error) {
 
 // Taken from http://stackoverflow.com/a/105074/515584
 // Strictly speaking, it's not a real UUID, but it gets the job done here
-function uuid() {
+function generateuuid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
