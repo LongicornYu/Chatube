@@ -1411,7 +1411,7 @@ canvas {
 #videoControlArea
 {
 	position: relative;
-	height: 95%;
+	height: 500px;
 	width: 100%;
 }
 
@@ -1425,7 +1425,7 @@ canvas {
 	left:0;
 	right:0;
 	border-radius:6px;
-	bottom:32%;
+	bottom:-19px;
 	display:none;
 }
 
@@ -1448,7 +1448,7 @@ canvas {
 	padding:10px;
 	height:20px;
 	width:20px;
-	background:red;
+	background:green;
 	left:25%;
 	top:27%;
 	position: absolute;
@@ -1460,7 +1460,7 @@ canvas {
 	padding:10px;
 	height:20px;
 	width:20px;
-	background:green;
+	background:red;
 	left:70%;
 	top:27%;
 	position: absolute;
@@ -1470,7 +1470,7 @@ canvas {
 	padding:10px;
 	height:20px;
 	width:20px;
-	background:red;
+	background:green;
 	left:70%;
 	top:27%;
 	position: absolute;
@@ -1482,7 +1482,7 @@ canvas {
 	padding:10px;
 	height:20px;
 	width:20px;
-	background:green;
+	background:red;
 	left:25%;
 	top:27%;
 	position: absolute;
