@@ -78,4 +78,4 @@ http.createServer(function (req, res) {
   console.log(req.url);
     res.writeHead(301, { "Location": "https://" + req.headers['host'].split(':')[0]+":"+port+ req.url });
     res.end();
-}).listen(8888);
+}).listen(1025);
