@@ -140,6 +140,15 @@ module.exports = function(app,io){
 	        socket.broadcast.to(this.room).emit('videoChatInvite', {senderId: data.senderId, avatar: this.avatar});
 	    });
 
+		socket.on('audioChat', function(data){
+						socket.emit('audiocreated', {senderId:data.senderId, user: this.username, avatar:this.avatar});
+						socket.broadcast.to(this.room).emit('audiocreated', {senderId: data.senderId, user: this.username,avatar: this.avatar});
+						socket.emit('audioChatInvite', {senderId: data.senderId, avatar: this.avatar});
+						socket.broadcast.to(this.room).emit('audioChatInvite', {senderId: data.senderId, avatar: this.avatar});
+				});
+
+
+
 		socket.on('videoChatJoined', function(data){
 					socket.emit('joined',{senderId:data.senderId, user: this.username, avatar:this.avatar});
 				  socket.broadcast.to(this.room).emit('joined', {senderId:data.senderId, user: this.username, avatar:this.avatar});
@@ -158,6 +167,26 @@ module.exports = function(app,io){
 					chat.in(data.senderId).emit('videoChatRefused', data.senderId);
 					socket.broadcast.to(this.room).emit('videoChatRefused', data.senderId);
 	    });
+
+
+		socket.on('audioChatJoined', function(data){
+						socket.emit('audiojoined',{senderId:data.senderId, user: this.username, avatar:this.avatar});
+					  socket.broadcast.to(this.room).emit('audiojoined', {senderId:data.senderId, user: this.username, avatar:this.avatar});
+
+						chat.in(data.senderId).emit('audioready');
+						socket.broadcast.to(this.room).emit('audioready');
+		    });
+
+		socket.on('audioChatCancelled', function(data){
+						console.log("audio call cancel");
+						chat.in(data.senderId).emit('audioChatSelfCancel', data.senderId);
+						socket.broadcast.to(this.room).emit('audioChatSelfCancel', data.senderId);
+			});
+
+		socket.on('audioChatRejected', function(data){
+						chat.in(data.senderId).emit('audioChatRefused', data.senderId);
+						socket.broadcast.to(this.room).emit('audioChatRefused', data.senderId);
+		    });
 
 
 		socket.on('emailChatHistory', function(data){

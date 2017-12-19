@@ -208,11 +208,32 @@
 			</div>
 		</div>
 
+		<div class="audioChatInvite">
+			<img src="../img/unnamed.jpg" id="topImage" />
+			<br/>
+			<h2><span class="nickname-chat"></span></h2>
+			<br/>
+			<div class="call-animation green">
+				<img class="img-circle" src="../img/videoCallAccept.png" alt="Accept" id="audioCallAccept" onclick="acceptAudioCall(); return false;" width="135"/>
+			</div>
+			<div class="call-animation red" >
+				<img class="img-circle" src="../img/videoCallReject.png" alt="Reject" id="audioCallReject" onclick="rejectAudioCall(); return false;" width="135"/>
+			</div>
+		</div>
+
 		<div class="videoChatInviteWait">
 			<h2>Waiting for <span class="nickname-chat"></span> to pick up...</h2>
 			<br/>
 			<div class="call-animation red" id="videoCallCancel">
 				<img class="img-circle" src="../img/videoCallReject.png" alt="Cancel"  onclick="cancelCall(); return false;" width="135"/>
+			</div>
+		</div>
+
+		<div class="audioChatInviteWait">
+			<h2>Waiting for <span class="nickname-chat"></span> to pick up...</h2>
+			<br/>
+			<div class="call-animation red" id="audioCallCancel">
+				<img class="img-circle" src="../img/videoCallReject.png" alt="Cancel"  onclick="cancelAudioCall(); return false;" width="135"/>
 			</div>
 		</div>
 
@@ -245,6 +266,21 @@
 		</div>
 
 		<div class="videoChatInviteOnwerCancelled">
+			<h2>You cancelled your call</h2>
+			<br/>
+		</div>
+
+		<div class="audioChatInviteReject">
+			<h2><span class="nickname-chat"></span> refused your call</h2>
+			<br/>
+		</div>
+
+		<div class="audioChatInviteCancelled">
+			<h2><span class="nickname-chat"></span> cancelled the call</h2>
+			<br/>
+		</div>
+
+		<div class="audioChatInviteOnwerCancelled">
 			<h2>You cancelled your call</h2>
 			<br/>
 		</div>
@@ -287,12 +323,32 @@
 				<div id="videoControlPanel">
 						<img class="img-circle" src="../img/unMutedMic.png" alt="MuteCall" id="VideoCallMute" onclick="unmuteCall(); return false;" width="135"/>
 						<img class="img-circle" src="../img/mutedMic.png" alt="UnMuteCall" id="VideoCallUnMute" onclick="muteCall(); return false;" width="135"/>
-						<img class="img-circle" src="../img/hangup.png" alt="EndCall" id="videoCallEnd" width="135"/>
+						<img class="img-circle" src="../img/hangup.png" alt="EndCall" id="videoCallEnd" onclick="endCall(); return false;" width="135"/>
 						<img class="img-circle" src="../img/videoOff.png" alt="TurnOffMyCamera" id="VideoOff" onclick="turnOffVideo(); return false;" width="135"/>
 						<img class="img-circle" src="../img/videoOn.png" alt="TurnOnMyCamera" id="VideoOn" onclick="turnOnVideo(); return false;" width="135"/>
 				</div>
 			</div>
     </div>
+	</div>
+	<div id="audioChatArea" >
+	<div>
+		<input type="button" id="startAudio" onclick="startAudio(true)" value="Start Audio"></input>
+	</div>
+		<div id="audioControlArea">
+			<audio id="localAudio" autoplay muted></audio>
+			<audio id="remoteAudio" autoplay></audio>
+			<image id="localVideo" autoplay muted></image>
+			<image id="remoteVideo" autoplay></image>
+			<div id="videoTimer">
+				<span id="minutes"></span>:<span id="seconds"></span>
+			</div>
+			<div id="audioControlPanel">
+					<img class="img-circle" src="../img/unMutedMic.png" alt="MuteAudioCall" id="AudioCallMute" onclick="unmuteAudioCall(); return false;" width="135"/>
+					<img class="img-circle" src="../img/mutedMic.png" alt="UnMuteAudioCall" id="AudioCallUnMute" onclick="muteAudioCall(); return false;" width="135"/>
+					<img class="img-circle" src="../img/hangup.png" alt="EndAudioCall" id="AudioCallEnd" onclick="endAudioCall(); return false;" width="135"/>
+			</div>
+		</div>
+	</div>
 		<div class="chatscreen">
 			<ul class="chats">
 				<!-- The chat messages will go here -->
@@ -367,8 +423,13 @@
 		$('#btnVideoChat').click(function(){
 			//$('.videoChatInviteWait').fadeIn(1200);
 			socket.emit("videoChat", {senderId: socket.io.engine.id});
-
 		});
+
+		$('#btnAudioChat').click(function(){
+			//$('.videoChatInviteWait').fadeIn(1200);
+			socket.emit("audioChat", {senderId: socket.io.engine.id});
+		});
+
 
 		$('#btnDownload').click(function(){
 			generate();
@@ -398,6 +459,26 @@
 			socket.emit("videoChatRejected", {senderId: socket.io.engine.id});
 		};
 
+		function acceptAudioCall(){
+			var sound = document.getElementById("videoCallaudio");
+			//sound.volume = (volume.value)/100.0;
+	    sound.pause();
+			socket.emit("audioChatJoined", {senderId: socket.io.engine.id});
+
+		};
+
+		function cancelAudioCall(){
+			console.log("cancel call");
+			socket.emit("audioChatCancelled", {senderId: socket.io.engine.id});
+		}
+
+		function rejectAudioCall(){
+			var sound = document.getElementById("videoCallaudio");
+			//sound.volume = (volume.value)/100.0;
+	    sound.pause();
+			socket.emit("audioChatRejected", {senderId: socket.io.engine.id});
+		};
+
 		function turnOffVideo(){
 
 			$('#VideoOn').toggle();
@@ -425,7 +506,19 @@
 
 			localStream.getAudioTracks()[0].enabled = true;
 		}
+		function muteAudioCall(){
+			$('#AudioCallMute').toggle();
+			$('#AudioCallUnMute').toggle();
 
+			localStream.getAudioTracks()[0].enabled = false;
+		}
+
+		function unmuteAudioCall(){
+			$('#AudioCallMute').toggle();
+			$('#AudioCallUnMute').toggle();
+
+			localStream.getAudioTracks()[0].enabled = true;
+		}
 
 		$(".actionMenu").mouseover(function(){
          $(".icon").css("display", "");
@@ -497,6 +590,7 @@ $('.send-button').click(function() {$('#chatform').submit()});
 	<script src="../js/adapter.js"></script>
 	<!--<script src="../js/videoChat.js"></script>-->
 	<script src="../js/videoAudioChat.js"></script>
+	<script src="../js/AudioChat.js"></script>
 </body>
 
 </html>

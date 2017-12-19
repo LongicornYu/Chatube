@@ -3,8 +3,8 @@
 /****************************************************************************
 * Initial setup
 ****************************************************************************/
-var localVideo;
-var remoteVideo;
+var localAudio;
+var remoteAudio;
 var peerConnection;
 var endCallButton;
 var uuid;
@@ -29,11 +29,11 @@ socket.on('ipaddr', function(ipaddr) {
   // updateRoomURL(ipaddr);
 });
 
-socket.on('created', function(data) {
+socket.on('audiocreated', function(data) {
 
   if(data.senderId == socket.io.engine.id)
   {
-    pageReady();
+    AudioPageReady();
   }
   else
   {
@@ -41,10 +41,10 @@ socket.on('created', function(data) {
   }
 });
 
-socket.on('joined', function(data) {
+socket.on('audiojoined', function(data) {
   if(data.senderId == socket.io.engine.id)
   {
-    pageReady();
+    AudioPageReady();
   }
   else
   {
@@ -53,30 +53,31 @@ socket.on('joined', function(data) {
 });
 
 
-socket.on('ready', function() {
-  console.log('VideoSocket is ready!');
-  var videoChatScreen = $("#videoChatArea");
+socket.on('audioready', function() {
+  console.log('AudioSocket is ready!');
+  var audioChatScreen = $("#audioChatArea");
   var chatscreen = $(".chatscreen");
 
-  videoChatScreen.addClass('leftPanel');
+  audioChatScreen.addClass('leftPanel');
   chatscreen.addClass('rightPanel');
 
-  var videoChatInviteWait = $(".videoChatInviteWait"),
-  videoChatInvite = $(".videoChatInvite"),
+  var audioChatInviteWait = $(".audioChatInviteWait"),
+  audioChatInvite = $(".audioChatInvite"),
   section = $(".section");
 
   section.children().css('display', 'none');
   chatscreen.css('display','block');
 
-  videoChatInvite.fadeOut(1200,function(){
-        videoChatScreen.fadeIn(1200);
+  audioChatInvite.fadeOut(1200,function(){
+        audioChatScreen.fadeIn(1200);
   });
 
-  videoChatInviteWait.fadeOut(1200,function(){
-        videoChatScreen.fadeIn(1200);
+  audioChatInviteWait.fadeOut(1200,function(){
+        audioChatScreen.fadeIn(1200);
   });
 
 });
+
 socket.on('ice-message', function(message) {
   console.log("get ice message");
   gotMessageFromServer(message);
@@ -86,15 +87,15 @@ socket.on('ice-message', function(message) {
 /****************************************************************************
 * User media (webcam)
 ****************************************************************************/
-function pageReady() {
+function AudioPageReady() {
 
     uuid = generateuuid();
 
-    localVideo = document.getElementById('localVideo');
-    remoteVideo = document.getElementById('remoteVideo');
-    endCallButton = document.getElementById('videoCallEnd');
+    localAudio = document.getElementById('localAudio');
+    remoteAudio = document.getElementById('remoteAudio');
+    endCallButton = document.getElementById('audioCallEnd');
     var constraints = {
-        video: true,
+        video: false,
         audio: true,
     };
 
@@ -110,15 +111,15 @@ function pageReady() {
 function getUserMediaSuccess(stream) {
     console.log("get media successfully:" + stream );
     localStream = stream;
-    localVideo.src = window.URL.createObjectURL(stream);
+    localAudio.src = window.URL.createObjectURL(stream);
 
     endCallButton.addEventListener("click", function (evt) {
       socket.emit("message",{'message':JSON.stringify({'closeConnection': 'true', 'uuid':''}), "senderId":socket.io.engine.id});
     });
 }
 
-function start(isCaller) {
-    console.log("video chat started:" + isCaller);
+function startAudio(isCaller) {
+    console.log("audio chat started:" + isCaller);
     peerConnection = new RTCPeerConnection(peerConnectionConfig);
     peerConnection.onicecandidate = iceCallback.bind({peerConnection:peerConnection, uuid:uuid});
     //peerConnection.onicecandidate = gotIceCandidate;
@@ -145,7 +146,7 @@ function gotMessageFromServer(message) {
       "get message from server?"
     );
 
-    if(!peerConnection) start(false);
+    if(!peerConnection) startAudio(false);
     console.log(JSON.parse(message));
 
     var signal = JSON.parse(message);
@@ -164,22 +165,21 @@ function gotMessageFromServer(message) {
         peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice)).catch(errorHandler);
     } else if (signal.closeConnection)
     {
-      endCall();
+      endAudioCall();
     }
 }
 
-function endCall() {
+function endAudioCall() {
   peerConnection.close();
   localStream.getAudioTracks()[0].stop();
-  localStream.getVideoTracks()[0].stop();
 
-  localVideo.src = "";
-  remoteVideo.src = "";
+  localAudio.src = "";
+  remoteAudio.src = "";
 
-  var videoChatScreen = $("#videoChatArea");
+  var audioChatScreen = $("#audioChatArea");
   var chatscreen = $(".chatscreen");
   var section = $(".section");
-  videoChatScreen.removeClass('leftPanel');
+  audioChatScreen.removeClass('leftPanel');
   chatscreen.removeClass('rightPanel');
   section.children().css('display', 'none');
   chatscreen.css('display','block');
@@ -205,12 +205,12 @@ function createdDescription(description) {
 
 function gotRemoteStream(event) {
     console.log('got remote stream');
-    remoteVideo.src = window.URL.createObjectURL(event.stream);
+    remoteAudio.src = window.URL.createObjectURL(event.stream);
 
-    $("#videoTimer").toggle();
-    $("#videoControlPanel").toggle();
+    $("#audioTimer").toggle();
+    $("#audioControlPanel").toggle();
 
-    remoteVideo.style.display = "block";
+    remoteAudio.style.display = "block";
 
     var sec = 0;
     function pad ( val ) { return val > 9 ? val : "0" + val; }

@@ -25,11 +25,17 @@ $(function(){
 		videoChatScreen = $("#videoChatArea"),
 		videoChatInviteReject = $(".videoChatInviteReject"),
 		videoChatInviteWait = $(".videoChatInviteWait"),
+		audioChatScreen = $("#audioChatArea"),
+		audioChatInviteReject = $(".audioChatInviteReject"),
+		audioChatInviteWait = $(".audioChatInviteWait"),
 		left = $(".left"),
 		noMessages = $(".nomessages"),
 		videoChatInviteCancelled = $(".videoChatInviteCancelled")
 		videoChatInviteOnwerCancelled = $(".videoChatInviteOnwerCancelled")
 		videoChatInvite = $(".videoChatInvite");
+		audioChatInviteCancelled = $(".audioChatInviteCancelled")
+		audioChatInviteOnwerCancelled = $(".audioChatInviteOnwerCancelled")
+		audioChatInvite = $(".audioChatInvite");
 		tooManyPeople = $(".toomanypeople");
 
 	// some more jquery objects
@@ -81,6 +87,22 @@ $(function(){
 		}
 	});
 
+	socket.on('audioChatInvite', function(data){
+
+		if (socket.io.engine.id != data.senderId)
+		{
+			showMessage("AudioChatReqest", data);
+			var sound = document.getElementById("videoCallaudio", data);
+			sound.loop=true;
+			//sound.volume = (volume.value)/100.0;
+			sound.play();
+		}
+		else
+		{
+			showMessage("AudioChatReqestWaiting", data);
+		}
+	});
+
 
 	socket.on('videoChatRefused', function(senderId){
 
@@ -107,6 +129,35 @@ $(function(){
 			//sound.volume = (volume.value)/100.0;
 			sound.pause();
 			showMessage("VideoChatOwnerCancelled");
+		}
+
+	});
+
+	socket.on('audioChatRefused', function(senderId){
+
+		if (socket.io.engine.id === senderId)
+		{
+			showMessage("AudioChatRejected");
+		}
+		else
+		{
+			showMessage("AudioChatRejectedOwner");
+		}
+
+	});
+
+	socket.on('audioChatSelfCancel', function(senderId){
+
+		if (socket.io.engine.id === senderId)
+		{
+			showMessage("AudioChatSelfCancelled");
+		}
+		else
+		{
+			var sound = document.getElementById("videoCallaudio");
+			//sound.volume = (volume.value)/100.0;
+			sound.pause();
+			showMessage("AudioChatOwnerCancelled");
 		}
 
 	});
@@ -542,7 +593,6 @@ $(function(){
 			section.children().css('display', 'none');
 			chatScreen.css('display','block');
 			videoChatInviteWait.fadeIn(1200);
-
 		}
 		else if (status === "VideoChatRejectedOwner") {
 			section.children().css('display', 'none');
@@ -565,6 +615,39 @@ $(function(){
 			chatScreen.css('display','block');
 			videoChatInviteWait.fadeOut(1200);
 			videoChatInviteCancelled.fadeIn(1200);
+		}
+		else if (status === "AudioChatReqest") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			topImage.attr("src",data.avatar);
+			audioChatInvite.fadeIn(1200);
+		}
+		else if (status === "AudioChatReqestWaiting") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			audioChatInviteWait.fadeIn(1200);
+		}
+		else if (status === "AudioChatRejectedOwner") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			audioChatInviteReject.fadeIn(1200);
+		}
+		else if (status === "AudioChatRejected") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			audioChatInvite.fadeOut(1200);
+		}
+		else if (status === "AudioChatSelfCancelled") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			audioChatInvite.fadeOut(1200);
+			audioChatInviteOnwerCancelled.fadeIn(1200);
+		}
+		else if (status === "AudioChatOwnerCancelled") {
+			section.children().css('display', 'none');
+			chatScreen.css('display','block');
+			audioChatInviteWait.fadeOut(1200);
+			audioChatInviteCancelled.fadeIn(1200);
 		}
 	}
 });
