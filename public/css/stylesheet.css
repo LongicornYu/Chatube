@@ -27,11 +27,16 @@ html {
 
 /*------------- Volume picker ------------ */
 #volume-slider{
-	float:right;
-  align-items: center;
-  display    : flex;
-  width      : 235px;
+	position:absolute;
+	right:0px;
+	top:60px;
+	padding:25px;
+	background-color:gray;
+    align-items: center;
+    display    : flex;
+    width      : 235px;
 	margin: 10px 10px 10px 10px;
+	display: none;
 }
 
 
@@ -81,7 +86,13 @@ html {
   width           : 12px;
 }
 
-
+#BtnVolume{
+	height:30px;
+	width:25px;
+	float:right;
+	margin-right:40px;
+	cursor: pointer;
+}
 /* ------ Home ------ */
 
 

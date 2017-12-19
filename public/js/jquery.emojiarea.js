@@ -418,20 +418,23 @@ function composeThumbnail(file) { // source: https://developer.mozilla.org/en-US
 
     this.$editor.on("paste", function (e) {
       console.log("User Paste Text");
-
       //if the image is copied from url, the clipboardData will have two items. First is the url of the image as text
       //and the second is image object itself.
       //if the image is directly copied as an object like from snipping tool, etc, the clipboard data only contains
       //the image object.
       var pastedData;
-      if(event.clipboardData.length > 1)
+      if(event.clipboardData.items.length > 1)
       {
+        console.log(event.clipboardData.items[0]);
+        console.log(event.clipboardData.items[1]);
+        
          pastedData = event.clipboardData.items[1];
       }
       else
       {
          pastedData = event.clipboardData.items[0];
       }
+
 
 
       // If the clipboard data is of type image, read the data

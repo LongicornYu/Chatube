@@ -78,7 +78,7 @@ $(function(){
 			showMessage("VideoChatReqest", data);
 			var sound = document.getElementById("videoCallaudio", data);
 			sound.loop=true;
-			//sound.volume = (volume.value)/100.0;
+			sound.volume = (volume.value)/100.0;
 	    	sound.play();
 		}
 		else
@@ -94,7 +94,7 @@ $(function(){
 			showMessage("AudioChatReqest", data);
 			var sound = document.getElementById("videoCallaudio", data);
 			sound.loop=true;
-			//sound.volume = (volume.value)/100.0;
+			sound.volume = (volume.value)/100.0;
 			sound.play();
 		}
 		else
@@ -330,29 +330,32 @@ $(function(){
 
 		e.preventDefault();
 
-		// Create a new chat message and display it directly
+		if (textarea.text().length > 0)
+		{
+			// Create a new chat message and display it directly
 
-		showMessage("chatStarted");
-		if(textarea.html().trim().length) {
+			showMessage("chatStarted");
+			if(textarea.html().trim().length) {
 
-			if (textarea.html().includes("<img"))
-			{
-				createChatMessage(true,textarea.html().toString(), name, img, moment());
-				scrollToBottom();
+				if (textarea.html().includes("<img"))
+				{
+					createChatMessage(true,textarea.html().toString(), name, img, moment());
+					scrollToBottom();
 
-				socket.emit('msg', { isImage: true, msg: textarea.html().toString(), user: name, img: img});
+					socket.emit('msg', { isImage: true, msg: textarea.html().toString(), user: name, img: img});
+				}
+				else
+				{
+					createChatMessage(false,textarea.html(), name, img, moment());
+					scrollToBottom();
+
+					// Send the message to the other person in the chat
+					socket.emit('msg', {isImage: false, msg: textarea.html(), user: name, img: img});
+				}
 			}
-			else
-			{
-				createChatMessage(false,textarea.html(), name, img, moment());
-				scrollToBottom();
-
-				// Send the message to the other person in the chat
-				socket.emit('msg', {isImage: false, msg: textarea.html(), user: name, img: img});
-			}
+			// Empty the textarea
+			textarea.text("");
 		}
-		// Empty the textarea
-		textarea.text("");
 	});
 
 
@@ -471,7 +474,7 @@ $(function(){
 			var out = emoji.replace_colons(msg);
 
 			// use the 'text' method to escape malicious user input
-			li.find('p').text(out);
+			li.find('p').html(out);
 		}
 
 		if(who==='me')

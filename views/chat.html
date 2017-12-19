@@ -61,8 +61,8 @@
 		<div class="bannertext">
 			<img src="../img/chatsmalllogo.png" alt="chatlogo" id="chatsmalllogo" />
 			<a href="" id="logo">ChatTube</a>
-
-			<div id="volume-slider" style="float:right">
+			<img src="../img/volume.png" alt="volumeButton" id="BtnVolume" />
+			<div id="volume-slider">
 			  <svg id="volume-icon" class="volume-icon" viewBox="-1 0 33 32">
 			    <defs>
 			      <mask id="circle-mask" x="-1" y="0" width="33" height="32">
@@ -442,7 +442,7 @@
 		function acceptCall(){
 			var sound = document.getElementById("videoCallaudio");
 			//sound.volume = (volume.value)/100.0;
-	    sound.pause();
+	    	sound.pause();
 			socket.emit("videoChatJoined", {senderId: socket.io.engine.id});
 
 		};
@@ -462,7 +462,7 @@
 		function acceptAudioCall(){
 			var sound = document.getElementById("videoCallaudio");
 			//sound.volume = (volume.value)/100.0;
-	    sound.pause();
+	    	sound.pause();
 			socket.emit("audioChatJoined", {senderId: socket.io.engine.id});
 
 		};
@@ -475,7 +475,7 @@
 		function rejectAudioCall(){
 			var sound = document.getElementById("videoCallaudio");
 			//sound.volume = (volume.value)/100.0;
-	    sound.pause();
+	    	sound.pause();
 			socket.emit("audioChatRejected", {senderId: socket.io.engine.id});
 		};
 
@@ -576,6 +576,14 @@
         $i2.fadeTo(250, 0);
         $iWrapper.css('color', 'white');
     }
+
+
+    $('#BtnVolume').on('click', e => {
+    	if ($('#volume-slider').css('display') == 'none')
+	    	$('#volume-slider').css('display', 'flex');
+	    else
+	    	$('#volume-slider').css('display', 'none');
+    });
 }); // end of document ready
 
 $('.send-button').click(function() {$('#chatform').submit()});
