@@ -76,6 +76,8 @@ $(function(){
 		if (socket.io.engine.id != data.senderId)
 		{
 			showMessage("VideoChatReqest", data);
+			var volume = document.getElementById("volume-input");
+
 			var sound = document.getElementById("videoCallaudio", data);
 			sound.loop=true;
 			sound.volume = (volume.value)/100.0;
@@ -91,7 +93,11 @@ $(function(){
 
 		if (socket.io.engine.id != data.senderId)
 		{
+
+				console.log(2);
 			showMessage("AudioChatReqest", data);
+			var volume = document.getElementById("volume-input");
+
 			var sound = document.getElementById("videoCallaudio", data);
 			sound.loop=true;
 			sound.volume = (volume.value)/100.0;
@@ -620,15 +626,19 @@ $(function(){
 			videoChatInviteCancelled.fadeIn(1200);
 		}
 		else if (status === "AudioChatReqest") {
+			console.log(3);
 			section.children().css('display', 'none');
 			chatScreen.css('display','block');
 			topImage.attr("src",data.avatar);
 			audioChatInvite.fadeIn(1200);
+			console.log(4);
 		}
 		else if (status === "AudioChatReqestWaiting") {
+			console.log(3);
 			section.children().css('display', 'none');
 			chatScreen.css('display','block');
 			audioChatInviteWait.fadeIn(1200);
+
 		}
 		else if (status === "AudioChatRejectedOwner") {
 			section.children().css('display', 'none');

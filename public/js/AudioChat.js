@@ -6,7 +6,7 @@
 var localAudio;
 var remoteAudio;
 var peerConnection;
-var endCallButton;
+var endAudioButton;
 var uuid;
 var localStream;
 var peerConnectionConfig = {
@@ -39,6 +39,7 @@ socket.on('audiocreated', function(data) {
   {
 
   }
+  console.log(1);
 });
 
 socket.on('audiojoined', function(data) {
@@ -78,9 +79,9 @@ socket.on('audioready', function() {
 
 });
 
-socket.on('ice-message', function(message) {
+socket.on('ice-message-audio', function(message) {
   console.log("get ice message");
-  gotMessageFromServer(message);
+  gotMessageFromAudioServer(message);
 });
 
 
@@ -93,46 +94,48 @@ function AudioPageReady() {
 
     localAudio = document.getElementById('localAudio');
     remoteAudio = document.getElementById('remoteAudio');
-    endCallButton = document.getElementById('audioCallEnd');
-    var constraints = {
+    endAudioButton = document.getElementById('AudioCallEnd');
+
+    console.log(endAudioButton);
+    var Audioconstraints = {
         video: false,
         audio: true,
     };
 
     if(navigator.mediaDevices.getUserMedia) {
 
-        navigator.mediaDevices.getUserMedia(constraints).then(getUserMediaSuccess).catch(errorHandler);
+        navigator.mediaDevices.getUserMedia(Audioconstraints).then(getUserAudioMediaSuccess).catch(errorHandler);
 
     } else {
         alert('Your browser does not support getUserMedia API');
     }
 }
 
-function getUserMediaSuccess(stream) {
+function getUserAudioMediaSuccess(stream) {
     console.log("get media successfully:" + stream );
     localStream = stream;
     localAudio.src = window.URL.createObjectURL(stream);
 
-    endCallButton.addEventListener("click", function (evt) {
-      socket.emit("message",{'message':JSON.stringify({'closeConnection': 'true', 'uuid':''}), "senderId":socket.io.engine.id});
+    endAudioButton.addEventListener("click", function (evt) {
+      socket.emit("message-audio",{'message':JSON.stringify({'closeConnection': 'true', 'uuid':''}), "senderId":socket.io.engine.id});
     });
 }
 
 function startAudio(isCaller) {
     console.log("audio chat started:" + isCaller);
     peerConnection = new RTCPeerConnection(peerConnectionConfig);
-    peerConnection.onicecandidate = iceCallback.bind({peerConnection:peerConnection, uuid:uuid});
+    peerConnection.onicecandidate = iceaudioCallback.bind({peerConnection:peerConnection, uuid:uuid});
     //peerConnection.onicecandidate = gotIceCandidate;
-    peerConnection.onaddstream = gotRemoteStream;
+    peerConnection.onaddstream = gotAudioRemoteStream;
     console.log("local stream:" + localStream);
     peerConnection.addStream(localStream);
 
     if(isCaller) {
-        peerConnection.createOffer().then(createdDescription).catch(errorHandler);
+        peerConnection.createOffer().then(createdAudioDescription).catch(errorHandler);
     }
 }
 
-function iceCallback(event) {
+function iceaudioCallback(event) {
   console.log("callback for event candidate"+event.candidate);
     if (event.candidate) {
         //var candidate = event.candidate;
@@ -141,7 +144,7 @@ function iceCallback(event) {
     }
 }
 
-function gotMessageFromServer(message) {
+function gotMessageFromAudioServer(message) {
     console.log(
       "get message from server?"
     );
@@ -194,7 +197,7 @@ function gotIceCandidate(event) {
     console.log("replied ice candidate"+ event.candiadate);
 }
 
-function createdDescription(description) {
+function createdAudioDescription(description) {
     console.log('got description');
 
     peerConnection.setLocalDescription(description).then(function() {
@@ -203,7 +206,7 @@ function createdDescription(description) {
     }).catch(errorHandler);
 }
 
-function gotRemoteStream(event) {
+function gotAudioRemoteStream(event) {
     console.log('got remote stream');
     remoteAudio.src = window.URL.createObjectURL(event.stream);
 

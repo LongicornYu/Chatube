@@ -228,6 +228,12 @@ module.exports = function(app,io){
 			socket.broadcast.to(this.room).emit('ice-message', data.message);
 		});
 
+		socket.on('message-audio', function(data) {
+			// for a real app, would be room-only (not broadcast)
+			chat.in(data.senderId).emit('ice-message-audio', data.message);
+			socket.broadcast.to(this.room).emit('ice-message-audio', data.message);
+		});
+
 		socket.on('ipaddr', function() {
 		    var ifaces = os.networkInterfaces();
 		    for (var dev in ifaces) {
