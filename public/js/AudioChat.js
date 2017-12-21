@@ -140,7 +140,7 @@ function iceaudioCallback(event) {
     if (event.candidate) {
         //var candidate = event.candidate;
         //socSend("candidate", candidate. event.target.id);     // OLD CODE
-        socket.emit("message",{'message':JSON.stringify({'ice': event.candidate, 'uuid': uuid}), "senderId":socket.io.engine.id});         // NEW CODE
+        socket.emit("message-audio",{'message':JSON.stringify({'ice': event.candidate, 'uuid': uuid}), "senderId":socket.io.engine.id});         // NEW CODE
     }
 }
 
@@ -192,7 +192,7 @@ function endAudioCall() {
 function gotIceCandidate(event) {
   console.log("get ice candidate");
     if(event.candidate != null) {
-        socket.emit("message",{'message':JSON.stringify({'ice': event.candidate, 'uuid': uuid}), 'senderId':socket.io.engine.id});
+        socket.emit("message-audio",{'message':JSON.stringify({'ice': event.candidate, 'uuid': uuid}), 'senderId':socket.io.engine.id});
     }
     console.log("replied ice candidate"+ event.candiadate);
 }
@@ -201,7 +201,7 @@ function createdAudioDescription(description) {
     console.log('got description');
 
     peerConnection.setLocalDescription(description).then(function() {
-        socket.emit("message",{'message':JSON.stringify({'sdp': peerConnection.localDescription, 'uuid': uuid}), 'senderId':socket.io.engine.id});
+        socket.emit("message-audio",{'message':JSON.stringify({'sdp': peerConnection.localDescription, 'uuid': uuid}), 'senderId':socket.io.engine.id});
         console.log("local description sent");
     }).catch(errorHandler);
 }
@@ -221,7 +221,43 @@ function gotAudioRemoteStream(event) {
         $("#seconds").html(pad(++sec%60));
         $("#minutes").html(pad(parseInt(sec/60,10)));
     }, 1000);
+
+        var paths = document.getElementsByTagName('path');
+        var visualizer = document.getElementById('visualizer');
+        var mask = visualizer.getElementById('mask');
+        var path;
+        var report = 0;
+
+        window.persistAudioStream = event.stream;
+        var audioContent = new AudioContext();
+        var audioStream = audioContent.createMediaStreamSource( event.stream );
+        var analyser = audioContent.createAnalyser();
+        audioStream.connect(analyser);
+        analyser.fftSize = 1024;
+
+        var frequencyArray = new Uint8Array(analyser.frequencyBinCount);
+        visualizer.setAttribute('viewBox', '0 0 255 255');
+
+				//Through the frequencyArray has a length longer than 255, there seems to be no
+        //significant data after this point. Not worth visualizing.
+        for (var i = 0 ; i < 255; i++) {
+            path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('stroke-dasharray', '4,1');
+            mask.appendChild(path);
+        }
+        var doDraw = function () {
+            requestAnimationFrame(doDraw);
+            analyser.getByteFrequencyData(frequencyArray);
+          	var adjustedLength;
+            for (var i = 0 ; i < 255; i++) {
+              	adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5);
+                paths[i].setAttribute('d', 'M '+ (i) +',255 l 0,-' + adjustedLength);
+            }
+
+        }
+        doDraw();
 }
+
 
 function errorHandler(error) {
     console.log(error);

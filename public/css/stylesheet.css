@@ -1739,7 +1739,7 @@ canvas {
   width:39%;
   height:100%;
   float:right;
-  zoom: 0.7;
+  zoom: 0.8;
   -moz-transform: scale(0.7);
   --padding:50px;
 }
@@ -1782,45 +1782,47 @@ canvas {
 #audioControlArea
 {
 	position: relative;
-	height: 500px;
-	width: 100%;
+	height: 400px;
+	width: 80%;
+	background:rgba(255,255,255,0.7);
+	opacity: 0.8;
+	border-radius:6px 6px 0px 0px;
 }
 
 #audioControlPanel
 {
 	z-index: 3;
 	position:absolute;
-	width:80.1%;
+	width:100%;
 	height: 90px;
 	background: rgba(255,255,255,0.7);
 	left:0;
 	right:0;
-	border-radius:6px;
-	bottom:-19px;
+	border-radius:0px 0px 6px 6px;
+	bottom:-90px;
 	display:none;
 }
 
-#audioCallEnd
-{
-	left:48%;
-	top:27%;
+#AudioCallEnd{
+	left:28% !important;
+	top:27% !important;
 	-webkit-transition: -webkit-box-shadow 400ms cubic-bezier(0.2, 0, 0.7, 1), -webkit-transform 200ms cubic-bezier(0.2, 0, 0.7, 1);
   transition: -webkit-box-shadow 400ms cubic-bezier(0.2, 0, 0.7, 1), -webkit-transform 200ms cubic-bezier(0.2, 0, 0.7, 1);
   transition: box-shadow 400ms cubic-bezier(0.2, 0, 0.7, 1), transform 200ms cubic-bezier(0.2, 0, 0.7, 1);
   transition: box-shadow 400ms cubic-bezier(0.2, 0, 0.7, 1), transform 200ms cubic-bezier(0.2, 0, 0.7, 1), -webkit-box-shadow 400ms cubic-bezier(0.2, 0, 0.7, 1), -webkit-transform 200ms cubic-bezier(0.2, 0, 0.7, 1);
 }
 
-#audioCallEnd:hover, #AudioCallMute:hover, #AudioCallUnMute:hover, #AudioOff:hover, #AudioOn:hover{
+#AudioCallEnd:hover, #AudioCallMute:hover, #AudioCallUnMute:hover, #AudioOff:hover, #AudioOn:hover{
   	-webkit-box-shadow: 0 0 1px 5px rgba(138, 59, 88, 0.4), 0 0 1px 10px rgba(138, 59, 88, 0.1), 0 0 1px 15px rgba(138, 59, 88, 0.1);
 	          box-shadow: 0 0 1px 5px rgba(138, 59, 88, 0.4), 0 0 1px 10px rgba(138, 59, 88, 0.1), 0 0 1px 15px rgba(138, 59, 88, 0.1);
 }
 
 #AudioCallMute{
-	padding:10px;
+	padding:12px;
 	height:20px;
 	width:20px;
 	background:green;
-	left:25%;
+	left:60%;
 	top:27%;
 	position: absolute;
 	display: none;
@@ -1850,11 +1852,38 @@ canvas {
 
 
 #AudioCallUnMute{
-	padding:10px;
+	padding:12px;
 	height:20px;
 	width:20px;
 	background:red;
-	left:25%;
+	left:60%;
 	top:27%;
 	position: absolute;
+}
+
+#audioCallCanvas{
+	position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+	z-index:1;
+}
+
+
+svg{
+display: block;
+width: 100%;
+height: 100%;
+padding: 0;
+margin: 0;
+position:absolute;
+z-index:1;
+}
+
+
+path{
+stroke-linecap: square;
+stroke: white;
+stroke-width: 0.5px;
 }

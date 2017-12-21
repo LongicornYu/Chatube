@@ -569,8 +569,16 @@ $(function(){
 				section.children().css('display','none');
 				videoChatScreen.css('display','block');
 			}else {
-				section.children().css('display','none');
-				videoChatScreen.css('display','none');
+				if (audioChatScreen.css('display') != "none")
+				{
+					section.children().css('display','none');
+					audioChatScreen.css('display','block');
+				}else
+				{
+					section.children().css('display','none');
+					videoChatScreen.css('display','none');
+					audioChatScreen.css('display','none');
+				}
 			}
 
 			chatScreen.css('display','block');
