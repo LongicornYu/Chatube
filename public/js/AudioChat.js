@@ -187,6 +187,7 @@ function endAudioCall() {
   section.children().css('display', 'none');
   chatscreen.css('display','block');
 
+  $('.action').css('pointer-events', '');
 };
 
 function gotIceCandidate(event) {

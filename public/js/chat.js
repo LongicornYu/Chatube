@@ -73,6 +73,7 @@ $(function(){
 
 	socket.on('videoChatInvite', function(data){
 
+		$('.action').css('pointer-events', 'none');
 		if (socket.io.engine.id != data.senderId)
 		{
 			showMessage("VideoChatReqest", data);
@@ -91,6 +92,7 @@ $(function(){
 
 	socket.on('audioChatInvite', function(data){
 
+		$('.action').css('pointer-events', 'none');
 		if (socket.io.engine.id != data.senderId)
 		{
 
@@ -112,6 +114,7 @@ $(function(){
 
 	socket.on('videoChatRefused', function(senderId){
 
+		$('.action').css('pointer-events', '');
 		if (socket.io.engine.id === senderId)
 		{
 			showMessage("VideoChatRejected");
@@ -125,6 +128,7 @@ $(function(){
 
 	socket.on('videoChatSelfCancel', function(senderId){
 
+		$('.action').css('pointer-events', '');
 		if (socket.io.engine.id === senderId)
 		{
 			showMessage("VideoChatSelfCancelled");
@@ -141,6 +145,7 @@ $(function(){
 
 	socket.on('audioChatRefused', function(senderId){
 
+		$('.action').css('pointer-events', '');
 		if (socket.io.engine.id === senderId)
 		{
 			showMessage("AudioChatRejected");
@@ -154,6 +159,7 @@ $(function(){
 
 	socket.on('audioChatSelfCancel', function(senderId){
 
+		$('.action').css('pointer-events', '');
 		if (socket.io.engine.id === senderId)
 		{
 			showMessage("AudioChatSelfCancelled");

@@ -183,6 +183,7 @@ function endCall() {
   chatscreen.removeClass('rightPanel');
   section.children().css('display', 'none');
   chatscreen.css('display','block');
+  $('.action').css('pointer-events', '');
 
 };
 
